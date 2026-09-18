@@ -11,10 +11,10 @@ Its three editorial sections are:
 
 ## Project status
 
-This repository currently contains the frontend and global design-language
-foundation: an editorial typography system, shared publication shell, restrained
-introductory homepage, and route foundations for each editorial section. The final
-homepage and the visual identities of FIELD, FRAMES, and JOURNAL are intentionally
+This repository contains the frontend and global design-language foundation: an
+editorial typography system, shared publication shell, the first full homepage
+editorial composition, and route foundations for each editorial section. The
+distinct visual identities of FIELD, FRAMES, and JOURNAL remain intentionally
 unfinished so each can develop independently.
 
 No CMS, database, authentication system, admin interface, or publishing pipeline
@@ -52,7 +52,7 @@ npm run build
 
 ## Routes
 
-- `/` — Publication introduction and section directory
+- `/` — Curated Field&Frames editorial front page
 - `/football` — FIELD foundation
 - `/films` — FRAMES foundation
 - `/journal` — JOURNAL foundation

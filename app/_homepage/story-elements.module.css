@@ -1,0 +1,81 @@
+.label,
+.meta,
+.caption {
+  font-family: var(--font-utility);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.46rem;
+  color: var(--color-text-muted);
+  font-size: var(--type-label);
+  font-weight: 650;
+  letter-spacing: 0.105em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.label span:first-child {
+  color: var(--color-accent);
+}
+
+.labelInverse {
+  color: color-mix(in srgb, var(--color-paper) 64%, transparent);
+}
+
+.labelInverse span:first-child {
+  color: var(--color-paper);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem 0.58rem;
+  color: var(--color-text-muted);
+  font-size: var(--type-meta);
+  letter-spacing: 0.018em;
+  line-height: 1.45;
+}
+
+.metaInverse {
+  color: color-mix(in srgb, var(--color-paper) 66%, transparent);
+}
+
+.figure {
+  margin: 0;
+}
+
+.imageFrame {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.imageFrame img {
+  object-fit: cover;
+  transition: transform var(--transition-standard);
+}
+
+.caption {
+  margin-block-start: 0.55rem;
+  color: var(--color-text-muted);
+  font-size: var(--type-caption);
+  line-height: 1.35;
+}
+
+.captionDark {
+  color: color-mix(in srgb, var(--color-paper) 56%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  article:hover .imageFrame img {
+    transform: scale(1.012);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imageFrame img {
+    transition: none;
+  }
+}
