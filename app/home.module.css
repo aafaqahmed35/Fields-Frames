@@ -1,0 +1,145 @@
+.homePage {
+  padding-top: 0;
+}
+
+.introduction {
+  display: grid;
+  min-height: min(58svh, 42rem);
+  align-content: end;
+  padding-block: clamp(var(--space-2xl), 9vw, var(--space-4xl));
+}
+
+.title {
+  max-width: 100%;
+  margin: var(--space-sm) 0 var(--space-lg);
+}
+
+.homeMark {
+  font-size: clamp(3rem, 12.25vw, 10rem);
+}
+
+.tagline {
+  max-width: 30ch;
+  margin: 0;
+  font-size: var(--type-deck);
+}
+
+.tagline span {
+  color: var(--color-text-muted);
+}
+
+.directoryList {
+  margin: 0;
+  padding: 0;
+  border-top: var(--rule-strong);
+  list-style: none;
+}
+
+.directoryItem {
+  border-bottom: var(--rule-strong);
+}
+
+.sectionEntry {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(12rem, 0.9fr) minmax(15rem, 1fr) auto;
+  align-items: center;
+  gap: var(--space-lg);
+  padding-block: clamp(var(--space-xl), 5vw, var(--space-3xl));
+}
+
+.entryIndex,
+.entryDescription,
+.entrySubject {
+  font-family: var(--font-utility);
+}
+
+.entryIndex {
+  align-self: start;
+  padding-top: 0.3rem;
+  color: var(--color-text-muted);
+  font-size: var(--type-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+.entryIdentity {
+  display: grid;
+  gap: var(--space-2xs);
+  transition: transform var(--transition-standard);
+}
+
+.entryName {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  font-weight: 610;
+  letter-spacing: -0.05em;
+  line-height: 0.86;
+}
+
+.entrySubject {
+  font-size: var(--type-small);
+  font-weight: 650;
+}
+
+.entryDescription {
+  max-width: 34ch;
+  color: var(--color-text-muted);
+  font-size: var(--type-small);
+  line-height: 1.5;
+}
+
+.entryArrow {
+  color: var(--color-accent);
+  font-family: var(--font-utility);
+  font-size: 1.4rem;
+  transition: transform var(--transition-standard);
+}
+
+.sectionEntry:hover .entryIdentity,
+.sectionEntry:focus-visible .entryIdentity {
+  transform: translateX(0.35rem);
+}
+
+.sectionEntry:hover .entryArrow,
+.sectionEntry:focus-visible .entryArrow {
+  transform: translateX(0.2rem);
+}
+
+@media (max-width: 48rem) {
+  .introduction {
+    min-height: min(50svh, 33rem);
+  }
+
+  .sectionEntry {
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  }
+
+  .entryDescription {
+    grid-column: 2 / -1;
+  }
+}
+
+@media (max-width: 30rem) {
+  .introduction {
+    min-height: 26rem;
+  }
+
+  .homeMark {
+    font-size: clamp(2.75rem, 14vw, 4rem);
+  }
+
+  .sectionEntry {
+    grid-template-columns: 1.5rem minmax(0, 1fr) auto;
+    gap: var(--space-sm);
+  }
+
+  .entryName {
+    font-size: clamp(2.2rem, 13vw, 3.1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entryIdentity,
+  .entryArrow {
+    transition: none;
+  }
+}

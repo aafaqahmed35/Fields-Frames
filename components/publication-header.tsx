@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+import { PublicationMark } from "@/components/publication-mark";
+
+import styles from "./publication-shell.module.css";
+
 const navigation = [
   { href: "/football", label: "Football" },
   { href: "/films", label: "Films" },
@@ -8,17 +12,19 @@ const navigation = [
 
 export function PublicationHeader() {
   return (
-    <header className="publication-header">
-      <div className="publication-header__inner">
-        <Link className="masthead" href="/" aria-label="Field and Frames, home">
-          Field<span aria-hidden="true">&amp;</span>Frames
+    <header className={styles.header}>
+      <div className={`editorial-container-wide ${styles.headerInner}`}>
+        <Link className={styles.identity} href="/" aria-label="Field and Frames, home">
+          <PublicationMark className={styles.headerMark} />
         </Link>
 
-        <nav className="primary-navigation" aria-label="Primary navigation">
-          <ul>
+        <nav className={styles.navigation} aria-label="Primary navigation">
+          <ul className={styles.navigationList}>
             {navigation.map((item) => (
               <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
+                <Link className={styles.navigationLink} href={item.href}>
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>

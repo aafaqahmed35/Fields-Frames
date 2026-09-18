@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+import { PublicationMark } from "@/components/publication-mark";
+
+import styles from "./home.module.css";
+
 const sections = [
   {
     href: "/football",
@@ -26,32 +30,34 @@ const sections = [
 
 export default function Home() {
   return (
-    <div className="page-container home-page">
-      <section className="home-introduction" aria-labelledby="publication-title">
-        <p className="eyebrow">Independent editorial publication</p>
-        <h1 id="publication-title">Field&amp;Frames</h1>
-        <p className="home-tagline">
+    <div className={`page-container ${styles.homePage}`}>
+      <section className={styles.introduction} aria-labelledby="publication-title">
+        <p className="editorial-label">Independent editorial publication</p>
+        <h1 className={styles.title} id="publication-title">
+          <PublicationMark className={styles.homeMark} />
+        </h1>
+        <p className={`editorial-deck ${styles.tagline}`}>
           Football. Film. <span>Everything worth writing about.</span>
         </p>
       </section>
 
-      <section className="section-directory" aria-labelledby="section-directory-title">
+      <section aria-labelledby="section-directory-title">
         <h2 className="sr-only" id="section-directory-title">
           Explore the publication
         </h2>
-        <ol>
+        <ol className={styles.directoryList}>
           {sections.map((section) => (
-            <li key={section.href}>
-              <Link className="section-entry" href={section.href}>
-                <span className="section-entry__index" aria-hidden="true">
+            <li className={styles.directoryItem} key={section.href}>
+              <Link className={styles.sectionEntry} href={section.href}>
+                <span className={styles.entryIndex} aria-hidden="true">
                   {section.index}
                 </span>
-                <span className="section-entry__identity">
-                  <strong>{section.name}</strong>
-                  <span>{section.subject}</span>
+                <span className={styles.entryIdentity}>
+                  <strong className={styles.entryName}>{section.name}</strong>
+                  <span className={styles.entrySubject}>{section.subject}</span>
                 </span>
-                <span className="section-entry__description">{section.description}</span>
-                <span className="section-entry__arrow" aria-hidden="true">
+                <span className={styles.entryDescription}>{section.description}</span>
+                <span className={styles.entryArrow} aria-hidden="true">
                   →
                 </span>
               </Link>

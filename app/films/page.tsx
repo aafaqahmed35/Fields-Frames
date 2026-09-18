@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import styles from "./films.module.css";
+
 export const metadata: Metadata = {
   title: "Frames — Film",
   description: "Frames is the film editorial world of Field&Frames.",
@@ -7,20 +9,20 @@ export const metadata: Metadata = {
 
 export default function FilmsPage() {
   return (
-    <div className="page-container films-page">
-      <header className="films-lead">
-        <div className="films-title-block">
-          <p className="section-label">Film</p>
-          <h1>FRAMES</h1>
+    <div className="page-container">
+      <header className={styles.lead}>
+        <div>
+          <p className="editorial-label">Film</p>
+          <h1 className={styles.title}>FRAMES</h1>
         </div>
-        <p className="section-deck">
+        <p className={`editorial-deck ${styles.deck}`}>
           Cinema considered one image, one performance, and one lasting idea at a
           time.
         </p>
       </header>
 
-      <section className="films-foundation" aria-labelledby="frames-foundation-title">
-        <p className="frame-number" aria-hidden="true">
+      <section className={styles.foundation} aria-labelledby="frames-foundation-title">
+        <p className={`editorial-label ${styles.frameNumber}`} aria-hidden="true">
           01 / 24
         </p>
         <div>

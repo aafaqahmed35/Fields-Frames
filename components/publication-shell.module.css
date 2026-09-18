@@ -1,0 +1,222 @@
+.header {
+  border-bottom: var(--rule-strong);
+  background: var(--color-page);
+}
+
+.headerInner {
+  display: grid;
+  min-height: 6.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: var(--space-xl);
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  justify-self: start;
+}
+
+.headerMark {
+  font-size: clamp(1.9rem, 3vw, 2.65rem);
+}
+
+.navigation {
+  align-self: stretch;
+  font-family: var(--font-utility);
+}
+
+.navigationList {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+  gap: clamp(var(--space-lg), 4vw, var(--space-2xl));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navigationLink {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding-top: 0.15rem;
+  font-size: var(--type-small);
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.navigationLink::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 0.1875rem;
+  background: var(--color-accent);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-quick);
+}
+
+.navigationLink:hover::after,
+.navigationLink:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.footer {
+  margin-top: clamp(var(--space-3xl), 10vw, var(--space-4xl));
+  border-top: var(--rule-strong);
+  background: var(--color-surface);
+}
+
+.footerInner {
+  padding-block: clamp(var(--space-xl), 5vw, var(--space-3xl)) var(--space-xl);
+}
+
+.footerMarkLink {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.footerMark {
+  font-size: clamp(2.7rem, 9vw, 8rem);
+}
+
+.footerDetails {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1.75fr) 1fr 1fr;
+  gap: var(--space-xl);
+  margin-top: clamp(var(--space-xl), 5vw, var(--space-3xl));
+  padding-top: var(--space-md);
+  border-top: var(--rule-subtle);
+}
+
+.descriptor,
+.identityNote {
+  margin: 0;
+}
+
+.descriptor {
+  max-width: 28ch;
+  font-family: var(--font-display);
+  font-size: var(--type-deck-sm);
+  line-height: 1.25;
+}
+
+.footerNavigation {
+  font-family: var(--font-utility);
+}
+
+.footerNavigationList {
+  display: grid;
+  gap: var(--space-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footerNavigationLink {
+  display: inline-block;
+  font-size: var(--type-small);
+  font-weight: 600;
+  text-decoration-color: transparent;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  transition: color var(--transition-quick),
+    text-decoration-color var(--transition-quick);
+}
+
+.footerNavigationLink:hover,
+.footerNavigationLink:focus-visible {
+  color: var(--color-accent);
+  text-decoration-color: currentColor;
+}
+
+.identityNote {
+  justify-self: end;
+  color: var(--color-text-muted);
+  font-family: var(--font-utility);
+  font-size: var(--type-meta);
+  line-height: 1.45;
+  text-align: right;
+}
+
+@media (max-width: 48rem) {
+  .headerInner {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .identity {
+    min-height: 5rem;
+  }
+
+  .navigation {
+    border-top: var(--rule-subtle);
+  }
+
+  .navigationList {
+    display: grid;
+    min-height: 3rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .navigationList li:nth-child(2) {
+    text-align: center;
+  }
+
+  .navigationList li:last-child {
+    text-align: right;
+  }
+
+  .navigationLink {
+    display: inline-flex;
+  }
+
+  .footerDetails {
+    grid-template-columns: minmax(0, 1.5fr) 1fr;
+  }
+
+  .identityNote {
+    grid-column: 1 / -1;
+    justify-self: start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 30rem) {
+  .headerInner {
+    gap: 0;
+  }
+
+  .headerMark {
+    font-size: 1.85rem;
+  }
+
+  .navigationLink {
+    font-size: 0.8rem;
+    letter-spacing: 0.035em;
+  }
+
+  .footerDetails {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .identityNote {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigationLink::after,
+  .footerNavigationLink {
+    transition: none;
+  }
+}

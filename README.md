@@ -11,10 +11,11 @@ Its three editorial sections are:
 
 ## Project status
 
-This repository currently contains the frontend foundation: a shared publication
-shell, a restrained introductory homepage, and route foundations for each editorial
-section. The final visual identities and page compositions are intentionally
-unfinished so FIELD, FRAMES, and JOURNAL can develop independently.
+This repository currently contains the frontend and global design-language
+foundation: an editorial typography system, shared publication shell, restrained
+introductory homepage, and route foundations for each editorial section. The final
+homepage and the visual identities of FIELD, FRAMES, and JOURNAL are intentionally
+unfinished so each can develop independently.
 
 No CMS, database, authentication system, admin interface, or publishing pipeline
 has been selected or implemented.
@@ -26,6 +27,10 @@ has been selected or implemented.
 - Tailwind CSS
 - ESLint
 - npm
+
+Global foundation styles live in `app/globals.css` and `app/styles/`. Shared shell
+components use colocated CSS Modules, while homepage and section-foundation styles
+remain local to their routes.
 
 ## Local development
 
