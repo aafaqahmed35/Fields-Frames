@@ -1,2 +1,53 @@
-# Fields-Frames
-    An independent publication for football, film, and everything worth writing about.
+# Field&Frames
+
+Field&Frames is an independent digital editorial publication for football, film,
+culture, ideas, and other long-form writing.
+
+Its three editorial sections are:
+
+- **FIELD** — Football
+- **FRAMES** — Film
+- **JOURNAL** — Essays, culture, ideas, and other writing
+
+## Project status
+
+This repository currently contains the frontend foundation: a shared publication
+shell, a restrained introductory homepage, and route foundations for each editorial
+section. The final visual identities and page compositions are intentionally
+unfinished so FIELD, FRAMES, and JOURNAL can develop independently.
+
+No CMS, database, authentication system, admin interface, or publishing pipeline
+has been selected or implemented.
+
+## Technology
+
+- Next.js with the App Router
+- React and TypeScript
+- Tailwind CSS
+- ESLint
+- npm
+
+## Local development
+
+Node.js 20.9 or newer is required.
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+For production verification:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Routes
+
+- `/` — Publication introduction and section directory
+- `/football` — FIELD foundation
+- `/films` — FRAMES foundation
+- `/journal` — JOURNAL foundation
