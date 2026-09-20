@@ -13,8 +13,8 @@ Its three editorial sections are:
 
 This repository contains the frontend and global design-language foundation: an
 editorial typography system, shared publication shell, the full homepage
-composition, and the first complete section experience for FIELD. CINEMA and
-ESSAYS remain route foundations so their distinct visual identities can develop
+composition, and complete section experiences for FIELD and CINEMA. ESSAYS
+remains a route foundation so its distinct visual identity can develop
 independently.
 
 No CMS, database, authentication system, admin interface, or publishing pipeline
@@ -54,7 +54,7 @@ npm run build
 
 - `/` — Curated Mind & Margin editorial front page
 - `/football` — Complete FIELD editorial section
-- `/cinema` — CINEMA foundation
+- `/cinema` — Complete CINEMA editorial section
 - `/essays` — ESSAYS foundation
 
 Legacy routes redirect permanently to their canonical replacements:
