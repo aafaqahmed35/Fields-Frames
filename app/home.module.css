@@ -1,5 +1,4 @@
 .homePage {
-  --home-section-space: clamp(5.5rem, 10vw, 10rem);
   overflow: clip;
 }
 
@@ -27,7 +26,7 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gap);
   align-items: end;
-  padding-block: clamp(2.25rem, 5.5vw, 5.75rem) var(--home-section-space);
+  padding-block: clamp(2.25rem, 5.5vw, 5.75rem) clamp(4.5rem, 7vw, 7rem);
 }
 
 .leadCopy {
@@ -35,16 +34,16 @@
   grid-column: 8 / -1;
   grid-row: 1;
   align-self: end;
-  padding-block-end: clamp(0rem, 2vw, 2.5rem);
+  padding-block-end: clamp(0rem, 1.25vw, 1.5rem);
 }
 
 .leadTitle {
-  max-width: 8.4ch;
+  max-width: 8.7ch;
   margin: var(--space-sm) 0 var(--space-lg);
-  font-size: clamp(4.6rem, 8.8vw, 8.6rem);
+  font-size: clamp(4.6rem, 8.4vw, 8.6rem);
   font-weight: 560;
-  letter-spacing: -0.062em;
-  line-height: 0.82;
+  letter-spacing: -0.06em;
+  line-height: 0.84;
   text-wrap: balance;
 }
 
@@ -72,7 +71,6 @@
   gap: var(--space-md);
   padding-block: var(--space-sm);
   border-top: var(--rule-strong);
-  border-bottom: var(--rule-subtle);
   font-family: var(--font-utility);
 }
 
@@ -92,14 +90,14 @@
 }
 
 .supporting {
-  padding-block-end: var(--home-section-space);
+  padding-block-end: clamp(5rem, 8.5vw, 8.5rem);
 }
 
 .supportingGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.72fr);
-  gap: clamp(2.75rem, 6vw, 7rem);
-  padding-block-start: clamp(var(--space-xl), 5vw, var(--space-2xl));
+  gap: clamp(2.75rem, 5.5vw, 6.5rem);
+  padding-block-start: clamp(var(--space-xl), 4.5vw, var(--space-2xl));
 }
 
 .imageFeature {
@@ -127,10 +125,10 @@
 
 .imageFeatureCopy h3 {
   margin: var(--space-sm) 0;
-  font-size: clamp(2.1rem, 3.7vw, 4rem);
-  font-weight: 560;
-  letter-spacing: -0.045em;
-  line-height: 0.96;
+  font-size: clamp(2.1rem, 3.35vw, 3.65rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 .imageFeatureCopy > p,
@@ -163,12 +161,13 @@
 }
 
 .mediumStory h3 {
-  max-width: 10ch;
+  max-width: 9ch;
   margin: var(--space-md) 0;
-  font-size: clamp(2.5rem, 4.4vw, 4.7rem);
-  font-weight: 520;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
+  font-family: var(--font-utility);
+  font-size: clamp(2.35rem, 3.8vw, 4.1rem);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.88;
 }
 
 .mediumStory > p,
@@ -183,13 +182,13 @@
   max-width: 16ch;
   margin: var(--space-sm) 0;
   font-size: clamp(1.75rem, 2.4vw, 2.45rem);
-  font-weight: 560;
+  font-weight: 650;
   letter-spacing: -0.035em;
   line-height: 1;
 }
 
 .cinemaFeature {
-  padding-block: clamp(4rem, 8vw, 8rem);
+  padding-block: clamp(3.75rem, 6vw, 6.5rem);
   background: var(--color-text);
   color: var(--color-surface);
 }
@@ -205,7 +204,7 @@
   z-index: 1;
   grid-column: 1 / 6;
   grid-row: 1;
-  padding-block: var(--space-xl);
+  padding-block: var(--space-sm);
 }
 
 .cinemaCopy h2 {
@@ -238,14 +237,15 @@
 }
 
 .dispatches {
-  padding-block: var(--home-section-space);
+  padding-block: clamp(5rem, 7.5vw, 7.5rem) clamp(5rem, 7vw, 7rem);
 }
 
 .dispatchesGrid {
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-  gap: clamp(3rem, 8vw, 9rem);
-  padding-block-start: clamp(var(--space-xl), 5vw, var(--space-2xl));
+  column-gap: clamp(3rem, 7vw, 8rem);
+  row-gap: 0;
+  padding-block-start: clamp(var(--space-xl), 4.5vw, var(--space-2xl));
 }
 
 .essayFeature {
@@ -255,9 +255,9 @@
 }
 
 .essayFeature h3 {
-  max-width: 9ch;
+  max-width: 9.5ch;
   margin: var(--space-lg) 0;
-  font-size: clamp(3.2rem, 5.8vw, 6.4rem);
+  font-size: clamp(3.2rem, 5.35vw, 5.9rem);
   font-style: italic;
   font-weight: 440;
   letter-spacing: -0.055em;
@@ -271,8 +271,13 @@
   line-height: 1.45;
 }
 
-.dispatchList {
+.dispatchPrimary,
+.dispatchContinuation {
   border-top: var(--rule-strong);
+}
+
+.dispatchContinuation {
+  grid-column: 1 / -1;
 }
 
 .dispatch {
@@ -304,8 +309,8 @@
 
 .dispatch h3 {
   margin: var(--space-sm) 0 var(--space-md);
-  font-size: clamp(1.8rem, 3vw, 3rem);
-  font-weight: 550;
+  font-size: clamp(1.8rem, 2.6vw, 2.75rem);
+  font-weight: 580;
   letter-spacing: -0.035em;
   line-height: 0.98;
 }
@@ -316,11 +321,31 @@
   line-height: 1.5;
 }
 
+.dispatchContinuation .dispatch {
+  gap: clamp(var(--space-lg), 3vw, var(--space-xl));
+}
+
+.dispatchContinuation .dispatchCopy {
+  grid-template-columns: minmax(0, 1.35fr) minmax(15rem, 0.65fr);
+  column-gap: clamp(var(--space-xl), 5vw, var(--space-3xl));
+}
+
+.dispatchContinuation .dispatch h3 {
+  max-width: 15ch;
+  font-size: clamp(2.15rem, 3.4vw, 3.65rem);
+  line-height: 0.94;
+}
+
+.dispatchContinuation .dispatchCopy > p {
+  align-self: end;
+  max-width: 30ch;
+}
+
 .gateways {
   display: grid;
   grid-template-columns: minmax(14rem, 0.62fr) minmax(0, 1.38fr);
   gap: clamp(3rem, 8vw, 9rem);
-  padding-block: clamp(4rem, 8vw, 8rem) 0;
+  padding-block: clamp(4.5rem, 7vw, 7rem) 0;
   border-top: var(--rule-strong);
 }
 
@@ -350,7 +375,8 @@
   grid-template-columns: 2.25rem minmax(0, 1fr) auto;
   gap: var(--space-lg);
   align-items: center;
-  padding-block: clamp(var(--space-lg), 4vw, var(--space-xl));
+  min-height: 7.25rem;
+  padding-block: clamp(var(--space-lg), 3vw, 2.5rem);
   text-decoration: none;
 }
 
@@ -439,13 +465,13 @@
   .dispatchCopy {
     grid-template-columns: 1fr;
   }
+
+  .dispatchContinuation .dispatchCopy {
+    grid-template-columns: minmax(0, 1.15fr) minmax(13rem, 0.7fr);
+  }
 }
 
 @media (max-width: 48rem) {
-  .homePage {
-    --home-section-space: clamp(4.5rem, 14vw, 7rem);
-  }
-
   .lead {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
@@ -536,11 +562,24 @@
   }
 
   .dispatchesGrid {
-    gap: var(--space-3xl);
+    column-gap: 0;
   }
 
   .essayFeature {
     max-width: 41rem;
+    margin-block-end: var(--space-3xl);
+  }
+
+  .dispatchContinuation {
+    border-top: 0;
+  }
+
+  .dispatchContinuation .dispatchCopy {
+    grid-template-columns: 1fr;
+  }
+
+  .dispatchContinuation .dispatch h3 {
+    max-width: 16ch;
   }
 
   .gateways {
@@ -595,7 +634,7 @@
   }
 
   .cinemaFeature {
-    padding-block: var(--space-2xl);
+    padding-block: clamp(3.5rem, 12vw, var(--space-2xl));
   }
 
   .cinemaCopy h2 {

@@ -22,7 +22,8 @@ const [
   fullBackStory,
 ] = homepageStories;
 
-const dispatches = [groundStory, closeUpStory, notebookStory, fullBackStory];
+const primaryDispatches = [groundStory, closeUpStory];
+const continuingDispatches = [notebookStory, fullBackStory];
 
 const gateways = [
   { section: "FIELD" as const, href: "/football", index: "01" },
@@ -145,11 +146,27 @@ export default function Home() {
               <StoryMeta {...unfinishedThought} />
             </article>
 
-            <div className={styles.dispatchList}>
-              {dispatches.map((story, index) => (
+            <div className={styles.dispatchPrimary}>
+              {primaryDispatches.map((story, index) => (
                 <article className={styles.dispatch} key={story.slug}>
                   <span className={styles.dispatchIndex} aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className={styles.dispatchCopy}>
+                    <StoryLabel section={story.section} label={story.label} />
+                    <h3>{story.title}</h3>
+                    <p>{story.dek}</p>
+                    <StoryMeta {...story} />
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className={styles.dispatchContinuation}>
+              {continuingDispatches.map((story, index) => (
+                <article className={styles.dispatch} key={story.slug}>
+                  <span className={styles.dispatchIndex} aria-hidden="true">
+                    {String(index + primaryDispatches.length + 1).padStart(2, "0")}
                   </span>
                   <div className={styles.dispatchCopy}>
                     <StoryLabel section={story.section} label={story.label} />
