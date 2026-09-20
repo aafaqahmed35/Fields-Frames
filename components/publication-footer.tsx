@@ -5,9 +5,9 @@ import { PublicationMark } from "@/components/publication-mark";
 import styles from "./publication-shell.module.css";
 
 const navigation = [
-  { href: "/football", label: "Football" },
-  { href: "/films", label: "Films" },
-  { href: "/journal", label: "Journal" },
+  { href: "/football", label: "Field" },
+  { href: "/cinema", label: "Cinema" },
+  { href: "/essays", label: "Essays" },
 ];
 
 export function PublicationFooter() {
@@ -17,14 +17,14 @@ export function PublicationFooter() {
         <Link
           className={styles.footerMarkLink}
           href="/"
-          aria-label="Field and Frames, home"
+          aria-label="Mind and Margin, home"
         >
           <PublicationMark className={styles.footerMark} />
         </Link>
 
         <div className={styles.footerDetails}>
           <p className={styles.descriptor}>
-            Football. Film. Everything worth writing about.
+            Football, cinema, and essays on life, culture, and ideas.
           </p>
 
           <nav className={styles.footerNavigation} aria-label="Footer navigation">

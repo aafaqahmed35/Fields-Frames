@@ -1,20 +1,20 @@
-# Field&Frames
+# Mind & Margin
 
-Field&Frames is an independent digital editorial publication for football, film,
-culture, ideas, and other long-form writing.
+Mind & Margin is an independent digital editorial publication for football,
+cinema, essays, culture, life, and ideas.
 
 Its three editorial sections are:
 
 - **FIELD** — Football
-- **FRAMES** — Film
-- **JOURNAL** — Essays, culture, ideas, and other writing
+- **CINEMA** — Film and filmmaking
+- **ESSAYS** — Essays, culture, life, and ideas
 
 ## Project status
 
 This repository contains the frontend and global design-language foundation: an
 editorial typography system, shared publication shell, the first full homepage
 editorial composition, and route foundations for each editorial section. The
-distinct visual identities of FIELD, FRAMES, and JOURNAL remain intentionally
+distinct visual identities of FIELD, CINEMA, and ESSAYS remain intentionally
 unfinished so each can develop independently.
 
 No CMS, database, authentication system, admin interface, or publishing pipeline
@@ -52,7 +52,12 @@ npm run build
 
 ## Routes
 
-- `/` — Curated Field&Frames editorial front page
+- `/` — Curated Mind & Margin editorial front page
 - `/football` — FIELD foundation
-- `/films` — FRAMES foundation
-- `/journal` — JOURNAL foundation
+- `/cinema` — CINEMA foundation
+- `/essays` — ESSAYS foundation
+
+Legacy routes redirect permanently to their canonical replacements:
+
+- `/films` → `/cinema`
+- `/journal` → `/essays`

@@ -28,11 +28,11 @@ const sourceSans = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: {
-    default: "Field&Frames",
-    template: "%s | Field&Frames",
+    default: "Mind & Margin",
+    template: "%s | Mind & Margin",
   },
   description:
-    "An independent publication about football, film, culture, ideas, and everything worth writing about.",
+    "An independent publication about football, cinema, life, culture, and ideas.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

@@ -9,7 +9,7 @@ export function PublicationMark({ className }: PublicationMarkProps) {
 
   return (
     <span className={classes}>
-      Field<span className={styles.ampersand}>&amp;</span>Frames
+      MIND <span className={styles.ampersand}>&amp;</span> MARGIN
     </span>
   );
 }

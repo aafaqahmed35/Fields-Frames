@@ -85,6 +85,6 @@ export function StoryVisual({
 
 export const sectionDescriptions: Record<StorySection, string> = {
   FIELD: "Football",
-  FRAMES: "Film",
-  JOURNAL: "Essays, culture, ideas & other writing",
+  CINEMA: "Film and filmmaking",
+  ESSAYS: "Life, culture, ideas & other writing",
 };

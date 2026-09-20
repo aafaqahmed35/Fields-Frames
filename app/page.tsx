@@ -27,16 +27,16 @@ const continuingDispatches = [notebookStory, fullBackStory];
 
 const gateways = [
   { section: "FIELD" as const, href: "/football", index: "01" },
-  { section: "FRAMES" as const, href: "/films", index: "02" },
-  { section: "JOURNAL" as const, href: "/journal", index: "03" },
+  { section: "CINEMA" as const, href: "/cinema", index: "02" },
+  { section: "ESSAYS" as const, href: "/essays", index: "03" },
 ];
 
 export default function Home() {
   return (
     <div className={styles.homePage}>
       <div className={`editorial-container-wide ${styles.frontMatter}`}>
-        <p>Field&amp;Frames / Front page</p>
-        <p>Football · Film · Ideas</p>
+        <p>Mind &amp; Margin / Front page</p>
+        <p>Field · Cinema · Essays</p>
       </div>
 
       <div>

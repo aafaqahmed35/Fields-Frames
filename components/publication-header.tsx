@@ -5,16 +5,16 @@ import { PublicationMark } from "@/components/publication-mark";
 import styles from "./publication-shell.module.css";
 
 const navigation = [
-  { href: "/football", label: "Football" },
-  { href: "/films", label: "Films" },
-  { href: "/journal", label: "Journal" },
+  { href: "/football", label: "Field" },
+  { href: "/cinema", label: "Cinema" },
+  { href: "/essays", label: "Essays" },
 ];
 
 export function PublicationHeader() {
   return (
     <header className={styles.header}>
       <div className={`editorial-container-wide ${styles.headerInner}`}>
-        <Link className={styles.identity} href="/" aria-label="Field and Frames, home">
+        <Link className={styles.identity} href="/" aria-label="Mind and Margin, home">
           <PublicationMark className={styles.headerMark} />
         </Link>
 

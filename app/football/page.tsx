@@ -4,7 +4,7 @@ import styles from "./football.module.css";
 
 export const metadata: Metadata = {
   title: "Field — Football",
-  description: "Field is the football editorial world of Field&Frames.",
+  description: "FIELD is the football editorial world of Mind & Margin.",
 };
 
 export default function FootballPage() {

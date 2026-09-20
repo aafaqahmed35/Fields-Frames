@@ -1,4 +1,4 @@
-export type StorySection = "FIELD" | "FRAMES" | "JOURNAL";
+export type StorySection = "FIELD" | "CINEMA" | "ESSAYS";
 
 export type StoryImage = {
   src: string;
@@ -21,7 +21,7 @@ export type HomepageStory = {
   image?: StoryImage;
 };
 
-// Temporary editorial photography was generated specifically for Field&Frames
+// Temporary editorial photography was generated specifically for Mind & Margin
 // with OpenAI ImageGen. It is local, original placeholder material designed to
 // preserve the intended crops until the publication has its own image library.
 export const homepageStories: readonly HomepageStory[] = [
@@ -39,13 +39,13 @@ export const homepageStories: readonly HomepageStory[] = [
       width: 1536,
       height: 1024,
       alt: "An empty community football pitch after rain beneath floodlights at blue hour",
-      credit: "Original visual study for Field&Frames",
+      credit: "Original visual study for Mind & Margin",
       focalPoint: "50% 54%",
     },
   },
   {
     slug: "the-case-for-looking-out-of-the-window",
-    section: "JOURNAL",
+    section: "ESSAYS",
     label: "Attention",
     title: "The case for looking out of the window",
     dek: "On buses, boredom, and the small discoveries that arrive when a journey is allowed to remain a journey.",
@@ -57,13 +57,13 @@ export const homepageStories: readonly HomepageStory[] = [
       width: 1024,
       height: 1536,
       alt: "A passenger reading beside a rain-streaked city bus window",
-      credit: "Original visual study for Field&Frames",
+      credit: "Original visual study for Mind & Margin",
       focalPoint: "54% 50%",
     },
   },
   {
     slug: "cutting-on-the-breath",
-    section: "FRAMES",
+    section: "CINEMA",
     label: "Craft",
     title: "Cutting on the breath",
     dek: "The invisible rhythms that let an edit feel less like a decision and more like an instinct.",
@@ -83,7 +83,7 @@ export const homepageStories: readonly HomepageStory[] = [
   },
   {
     slug: "the-room-before-the-picture-begins",
-    section: "FRAMES",
+    section: "CINEMA",
     label: "Cinema",
     title: "The room before the picture begins",
     dek: "An empty screen is not empty at all. It holds anticipation, memory, and the private ritual of waiting for light.",
@@ -95,13 +95,13 @@ export const homepageStories: readonly HomepageStory[] = [
       width: 1672,
       height: 941,
       alt: "An empty independent cinema auditorium facing a blank screen in a projector beam",
-      credit: "Original visual study for Field&Frames",
+      credit: "Original visual study for Mind & Margin",
       focalPoint: "50% 50%",
     },
   },
   {
     slug: "the-useful-distance-of-an-unfinished-thought",
-    section: "JOURNAL",
+    section: "ESSAYS",
     label: "Notebook",
     title: "The useful distance of an unfinished thought",
     dek: "Some ideas improve not through pursuit, but through the quiet interval in which they are almost forgotten.",
@@ -121,7 +121,7 @@ export const homepageStories: readonly HomepageStory[] = [
   },
   {
     slug: "the-close-up-is-a-promise",
-    section: "FRAMES",
+    section: "CINEMA",
     label: "Form",
     title: "The close-up is a promise, not an answer",
     dek: "A face fills the frame. What the camera withholds matters just as much.",
@@ -131,7 +131,7 @@ export const homepageStories: readonly HomepageStory[] = [
   },
   {
     slug: "in-praise-of-the-ordinary-notebook",
-    section: "JOURNAL",
+    section: "ESSAYS",
     label: "Objects",
     title: "In praise of the ordinary notebook",
     dek: "Dog-eared pages, abandoned lists, and a life recorded without an audience.",
