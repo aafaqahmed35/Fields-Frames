@@ -1,3 +1,5 @@
+import type { StorySummary } from "@/content/story";
+
 export type CinemaCategory =
   | "Design"
   | "Editing"
@@ -11,28 +13,9 @@ export type CinemaCategory =
   | "Screenwriting"
   | "Sound";
 
-export type CinemaImage = {
-  src: string;
-  width: number;
-  height: number;
-  alt: string;
-  credit: string;
-  focalPoint?: string;
-};
+export type CinemaStory = StorySummary<CinemaCategory>;
 
-export type CinemaStory = {
-  slug: string;
-  category: CinemaCategory;
-  title: string;
-  dek: string;
-  author: string;
-  date: string;
-  dateLabel: string;
-  image?: CinemaImage;
-};
-
-// Local, non-linked editorial concepts for the CINEMA section. They remain
-// route-local until Mind & Margin has a shared article-detail system.
+// Canonical CINEMA summaries. Article bodies are explicitly registered elsewhere.
 export const cinemaStories = [
   {
     slug: "the-room-before-the-picture-begins",

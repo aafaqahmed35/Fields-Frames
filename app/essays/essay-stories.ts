@@ -1,3 +1,5 @@
+import type { StorySummary } from "@/content/story";
+
 export type EssayCategory =
   | "ATTENTION"
   | "IDEAS"
@@ -12,25 +14,10 @@ export type EssayCategory =
 
 export type EssayForm = "Essay" | "Notebook" | "Observation";
 
-export type EssayStory = {
-  slug: string;
-  category: EssayCategory;
+export type EssayStory = StorySummary<EssayCategory> & {
   form: EssayForm;
-  title: string;
-  dek: string;
-  author: string;
-  date: string;
-  dateLabel: string;
   readingMinutes: number;
   excerpt?: string;
-  image?: {
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-    credit: string;
-    focalPoint: string;
-  };
 };
 
 export const essayStories: EssayStory[] = [
@@ -46,6 +33,14 @@ export const essayStories: EssayStory[] = [
     readingMinutes: 9,
     excerpt:
       "The window asks very little of us. It offers weather, repetition, an unknown person crossing the street—and, if we stay long enough, the slow return of our attention.",
+    image: {
+      src: "/images/editorial/journal-rain-window.jpg",
+      width: 1024,
+      height: 1536,
+      alt: "A passenger reading beside a rain-streaked city bus window",
+      credit: "Original visual study for Mind & Margin",
+      focalPoint: "54% 50%",
+    },
   },
   {
     slug: "the-rooms-we-remember-have-their-own-weather",

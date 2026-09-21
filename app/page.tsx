@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { StoryLink } from "@/components/story-link";
+
 import {
   sectionDescriptions,
   StoryLabel,
@@ -43,7 +45,11 @@ export default function Home() {
         <article className={`editorial-container-wide ${styles.lead}`}>
           <div className={styles.leadCopy}>
             <StoryLabel section={leadStory.section} label={leadStory.label} />
-            <h1 className={styles.leadTitle}>{leadStory.title}</h1>
+            <h1 className={styles.leadTitle}>
+              <StoryLink section={leadStory.section} slug={leadStory.slug}>
+                {leadStory.title}
+              </StoryLink>
+            </h1>
             <p className={styles.leadDek}>{leadStory.dek}</p>
             <StoryMeta {...leadStory} />
           </div>
@@ -75,7 +81,11 @@ export default function Home() {
               />
               <div className={styles.imageFeatureCopy}>
                 <StoryLabel section={windowEssay.section} label={windowEssay.label} />
-                <h3>{windowEssay.title}</h3>
+                <h3>
+                  <StoryLink section={windowEssay.section} slug={windowEssay.slug}>
+                    {windowEssay.title}
+                  </StoryLink>
+                </h3>
                 <p>{windowEssay.dek}</p>
                 <StoryMeta {...windowEssay} />
               </div>
@@ -84,7 +94,11 @@ export default function Home() {
             <div className={styles.supportingColumn}>
               <article className={styles.mediumStory}>
                 <StoryLabel section={editingStory.section} label={editingStory.label} />
-                <h3>{editingStory.title}</h3>
+                <h3>
+                  <StoryLink section={editingStory.section} slug={editingStory.slug}>
+                    {editingStory.title}
+                  </StoryLink>
+                </h3>
                 <p>{editingStory.dek}</p>
                 <StoryMeta {...editingStory} />
               </article>
@@ -94,7 +108,11 @@ export default function Home() {
                   section={secondBallStory.section}
                   label={secondBallStory.label}
                 />
-                <h3>{secondBallStory.title}</h3>
+                <h3>
+                  <StoryLink section={secondBallStory.section} slug={secondBallStory.slug}>
+                    {secondBallStory.title}
+                  </StoryLink>
+                </h3>
                 <p>{secondBallStory.dek}</p>
                 <StoryMeta {...secondBallStory} />
               </article>
@@ -111,7 +129,11 @@ export default function Home() {
                   label={cinemaStory.label}
                   inverse
                 />
-                <h2 id="cinema-title">{cinemaStory.title}</h2>
+                <h2 id="cinema-title">
+                  <StoryLink section={cinemaStory.section} slug={cinemaStory.slug}>
+                    {cinemaStory.title}
+                  </StoryLink>
+                </h2>
                 <p>{cinemaStory.dek}</p>
                 <StoryMeta {...cinemaStory} inverse />
               </div>
@@ -141,7 +163,11 @@ export default function Home() {
                 section={unfinishedThought.section}
                 label={unfinishedThought.label}
               />
-              <h3>{unfinishedThought.title}</h3>
+              <h3>
+                <StoryLink section={unfinishedThought.section} slug={unfinishedThought.slug}>
+                  {unfinishedThought.title}
+                </StoryLink>
+              </h3>
               <p>{unfinishedThought.dek}</p>
               <StoryMeta {...unfinishedThought} />
             </article>
@@ -154,7 +180,11 @@ export default function Home() {
                   </span>
                   <div className={styles.dispatchCopy}>
                     <StoryLabel section={story.section} label={story.label} />
-                    <h3>{story.title}</h3>
+                    <h3>
+                      <StoryLink section={story.section} slug={story.slug}>
+                        {story.title}
+                      </StoryLink>
+                    </h3>
                     <p>{story.dek}</p>
                     <StoryMeta {...story} />
                   </div>
@@ -170,7 +200,11 @@ export default function Home() {
                   </span>
                   <div className={styles.dispatchCopy}>
                     <StoryLabel section={story.section} label={story.label} />
-                    <h3>{story.title}</h3>
+                    <h3>
+                      <StoryLink section={story.section} slug={story.slug}>
+                        {story.title}
+                      </StoryLink>
+                    </h3>
                     <p>{story.dek}</p>
                     <StoryMeta {...story} />
                   </div>

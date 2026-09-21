@@ -13,12 +13,11 @@ Its three editorial sections are:
 
 This repository contains the frontend and global design-language foundation: an
 editorial typography system, shared publication shell, the full homepage
-composition, and complete frontend section-page experiences for FIELD, CINEMA,
-and ESSAYS. The three editorial worlds are complete at the section-index level;
-shared article-detail and publishing systems have not been built.
+composition, complete section indexes for FIELD, CINEMA, and ESSAYS, and a
+shared article-detail system with representative typed local article content.
 
 No CMS, database, authentication system, admin interface, or publishing pipeline
-has been selected or implemented.
+has been selected or implemented. Article content remains local and typed.
 
 ## Technology
 
@@ -56,6 +55,9 @@ npm run build
 - `/football` — Complete FIELD editorial section
 - `/cinema` — Complete CINEMA editorial section
 - `/essays` — Complete ESSAYS editorial section
+- `/football/[slug]` — FIELD articles
+- `/cinema/[slug]` — CINEMA articles
+- `/essays/[slug]` — ESSAYS articles
 
 Legacy routes redirect permanently to their canonical replacements:
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 
+import { StoryLink } from "@/components/story-link";
+
 import { essayStories, type EssayStory } from "./essay-stories";
 import styles from "./essays.module.css";
 
@@ -85,7 +87,11 @@ export default function EssaysPage() {
           </dl>
         </aside>
         <div className={styles.leadCopy}>
-          <h2>{leadStory.title}</h2>
+          <h2>
+            <StoryLink section="ESSAYS" slug={leadStory.slug}>
+              {leadStory.title}
+            </StoryLink>
+          </h2>
           <p className={styles.leadDek}>{leadStory.dek}</p>
           {leadStory.excerpt ? (
             <p className={styles.leadExcerpt}>{leadStory.excerpt}</p>
@@ -116,7 +122,11 @@ export default function EssaysPage() {
                 <span>{story.category}</span>
                 <span>{story.form}</span>
               </p>
-              <h3>{story.title}</h3>
+              <h3>
+                <StoryLink section="ESSAYS" slug={story.slug}>
+                  {story.title}
+                </StoryLink>
+              </h3>
               <p className={styles.storyDek}>{story.dek}</p>
               <StoryMeta story={story} />
             </article>
@@ -151,7 +161,11 @@ export default function EssaysPage() {
                 <span>{streetStory.category}</span>
                 <span>{streetStory.form}</span>
               </p>
-              <h2 id="street-title">{streetStory.title}</h2>
+              <h2 id="street-title">
+                <StoryLink section="ESSAYS" slug={streetStory.slug}>
+                  {streetStory.title}
+                </StoryLink>
+              </h2>
               <p className={styles.streetDek}>{streetStory.dek}</p>
               <StoryMeta story={streetStory} />
             </article>
@@ -161,7 +175,11 @@ export default function EssaysPage() {
                 <span>{friendshipStory.category}</span>
                 <span>{friendshipStory.form}</span>
               </p>
-              <h3>{friendshipStory.title}</h3>
+              <h3>
+                <StoryLink section="ESSAYS" slug={friendshipStory.slug}>
+                  {friendshipStory.title}
+                </StoryLink>
+              </h3>
               <p>{friendshipStory.dek}</p>
               <StoryMeta story={friendshipStory} />
             </article>
@@ -184,7 +202,11 @@ export default function EssaysPage() {
               <span>{tasteStory.category}</span>
               <span>{tasteStory.form}</span>
             </p>
-            <h2 id="systems-title">{tasteStory.title}</h2>
+            <h2 id="systems-title">
+              <StoryLink section="ESSAYS" slug={tasteStory.slug}>
+                {tasteStory.title}
+              </StoryLink>
+            </h2>
           </div>
           <div className={styles.systemsFeatureDetails}>
             <p>{tasteStory.dek}</p>
@@ -202,7 +224,11 @@ export default function EssaysPage() {
                 <span>{story.category}</span>
                 <span>{story.form}</span>
               </p>
-              <h3>{story.title}</h3>
+              <h3>
+                <StoryLink section="ESSAYS" slug={story.slug}>
+                  {story.title}
+                </StoryLink>
+              </h3>
               <p className={styles.storyDek}>{story.dek}</p>
               <StoryMeta story={story} />
             </article>
@@ -226,7 +252,11 @@ export default function EssaysPage() {
                 </p>
                 <p className={styles.marginCategory}>{story.category}</p>
                 <div className={styles.marginCopy}>
-                  <h3>{story.title}</h3>
+                  <h3>
+                    <StoryLink section="ESSAYS" slug={story.slug}>
+                      {story.title}
+                    </StoryLink>
+                  </h3>
                   <p>{story.dek}</p>
                 </div>
                 <StoryMeta story={story} />
@@ -243,7 +273,11 @@ export default function EssaysPage() {
             <span>{afternoonStory.category}</span>
             <span>{afternoonStory.form}</span>
           </p>
-          <h2>{afternoonStory.title}</h2>
+          <h2>
+            <StoryLink section="ESSAYS" slug={afternoonStory.slug}>
+              {afternoonStory.title}
+            </StoryLink>
+          </h2>
           <div>
             <p className={styles.endingDek}>{afternoonStory.dek}</p>
             <StoryMeta story={afternoonStory} />

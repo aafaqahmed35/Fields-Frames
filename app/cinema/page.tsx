@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 
+import { StoryLink } from "@/components/story-link";
+
 import { cinemaStories, type CinemaStory } from "./cinema-stories";
 import styles from "./cinema.module.css";
 
@@ -71,7 +73,11 @@ export default function CinemaPage() {
               <p>{leadStory.category}</p>
               <p>Opening feature</p>
             </div>
-            <h2>{leadStory.title}</h2>
+            <h2>
+              <StoryLink section="CINEMA" slug={leadStory.slug}>
+                {leadStory.title}
+              </StoryLink>
+            </h2>
             <div className={styles.leadDetails}>
               <p>{leadStory.dek}</p>
               <StoryMeta story={leadStory} inverse />
@@ -110,7 +116,11 @@ export default function CinemaPage() {
           ) : null}
           <div className={styles.editingCopy}>
             <p className={styles.storyLabel}>{editingStory.category}</p>
-            <h3>{editingStory.title}</h3>
+            <h3>
+              <StoryLink section="CINEMA" slug={editingStory.slug}>
+                {editingStory.title}
+              </StoryLink>
+            </h3>
             <p className={styles.storyDek}>{editingStory.dek}</p>
             <StoryMeta story={editingStory} />
           </div>
@@ -122,7 +132,11 @@ export default function CinemaPage() {
               <p className={styles.noteCue}>{index === 0 ? "Look" : "Listen"}</p>
               <div>
                 <p className={styles.storyLabel}>{story.category}</p>
-                <h3>{story.title}</h3>
+                <h3>
+                  <StoryLink section="CINEMA" slug={story.slug}>
+                    {story.title}
+                  </StoryLink>
+                </h3>
                 <p className={styles.storyDek}>{story.dek}</p>
                 <StoryMeta story={story} />
               </div>
@@ -155,7 +169,11 @@ export default function CinemaPage() {
             ) : null}
             <div className={styles.performanceCopy}>
               <p className={styles.storyLabel}>{performanceStory.category}</p>
-              <h2 id="performance-title">{performanceStory.title}</h2>
+              <h2 id="performance-title">
+                <StoryLink section="CINEMA" slug={performanceStory.slug}>
+                  {performanceStory.title}
+                </StoryLink>
+              </h2>
               <p className={styles.performanceDek}>{performanceStory.dek}</p>
               <StoryMeta story={performanceStory} />
             </div>
@@ -165,7 +183,11 @@ export default function CinemaPage() {
             {performanceNotes.map((story) => (
               <article key={story.slug}>
                 <p className={styles.storyLabel}>{story.category}</p>
-                <h3>{story.title}</h3>
+                <h3>
+                  <StoryLink section="CINEMA" slug={story.slug}>
+                    {story.title}
+                  </StoryLink>
+                </h3>
                 <p className={styles.storyDek}>{story.dek}</p>
                 <StoryMeta story={story} />
               </article>
@@ -185,7 +207,11 @@ export default function CinemaPage() {
 
         <article className={styles.audienceFeature}>
           <p className={styles.audienceCategory}>{lastRowStory.category}</p>
-          <h2 id="audience-title">{lastRowStory.title}</h2>
+          <h2 id="audience-title">
+            <StoryLink section="CINEMA" slug={lastRowStory.slug}>
+              {lastRowStory.title}
+            </StoryLink>
+          </h2>
           <p>{lastRowStory.dek}</p>
           <StoryMeta story={lastRowStory} />
         </article>
@@ -194,7 +220,11 @@ export default function CinemaPage() {
           {audienceNotes.map((story) => (
             <article className={styles.audienceNote} key={story.slug}>
               <p className={styles.storyLabel}>{story.category}</p>
-              <h3>{story.title}</h3>
+              <h3>
+                <StoryLink section="CINEMA" slug={story.slug}>
+                  {story.title}
+                </StoryLink>
+              </h3>
               <p className={styles.storyDek}>{story.dek}</p>
               <StoryMeta story={story} />
             </article>
@@ -205,7 +235,11 @@ export default function CinemaPage() {
       <section className={styles.afterimage} aria-labelledby="afterimage-title">
         <article className={`editorial-container ${styles.afterimageStory}`}>
           <p className={styles.afterimageLabel}>Afterimage</p>
-          <h2 id="afterimage-title">{afterimageStory.title}</h2>
+          <h2 id="afterimage-title">
+            <StoryLink section="CINEMA" slug={afterimageStory.slug}>
+              {afterimageStory.title}
+            </StoryLink>
+          </h2>
           <p className={styles.afterimageDek}>{afterimageStory.dek}</p>
           <StoryMeta story={afterimageStory} />
         </article>

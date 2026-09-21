@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 
+import { StoryLink } from "@/components/story-link";
+
 import { fieldStories, type FieldStory } from "./field-stories";
 import styles from "./football.module.css";
 
@@ -69,7 +71,11 @@ export default function FootballPage() {
         </div>
 
         <div className={styles.leadCopy}>
-          <h2>{leadStory.title}</h2>
+          <h2>
+            <StoryLink section="FIELD" slug={leadStory.slug}>
+              {leadStory.title}
+            </StoryLink>
+          </h2>
           <div className={styles.leadDetails}>
             <p className={styles.leadDek}>{leadStory.dek}</p>
             <StoryMeta story={leadStory} />
@@ -118,7 +124,11 @@ export default function FootballPage() {
                 </div>
                 <div className={styles.analysisCopy}>
                   <p className={styles.storyLabel}>{story.category}</p>
-                  <h3>{story.title}</h3>
+                  <h3>
+                    <StoryLink section="FIELD" slug={story.slug}>
+                      {story.title}
+                    </StoryLink>
+                  </h3>
                   <p className={styles.analysisDek}>{story.dek}</p>
                   <StoryMeta story={story} inverse />
                 </div>
@@ -143,7 +153,11 @@ export default function FootballPage() {
 
         <article className={styles.groundFeature}>
           <p className={styles.storyLabel}>{groundStory.category}</p>
-          <h3>{groundStory.title}</h3>
+          <h3>
+            <StoryLink section="FIELD" slug={groundStory.slug}>
+              {groundStory.title}
+            </StoryLink>
+          </h3>
           <p className={styles.groundDek}>{groundStory.dek}</p>
           <StoryMeta story={groundStory} />
         </article>
@@ -156,7 +170,11 @@ export default function FootballPage() {
               </span>
               <div>
                 <p className={styles.storyLabel}>{story.category}</p>
-                <h3>{story.title}</h3>
+                <h3>
+                  <StoryLink section="FIELD" slug={story.slug}>
+                    {story.title}
+                  </StoryLink>
+                </h3>
                 <p>{story.dek}</p>
                 <StoryMeta story={story} />
               </div>
@@ -185,7 +203,11 @@ export default function FootballPage() {
               </span>
               <p className={styles.notebookCategory}>{story.category}</p>
               <div className={styles.notebookCopy}>
-                <h3>{story.title}</h3>
+                <h3>
+                  <StoryLink section="FIELD" slug={story.slug}>
+                    {story.title}
+                  </StoryLink>
+                </h3>
                 <p>{story.dek}</p>
               </div>
               <StoryMeta story={story} />

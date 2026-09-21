@@ -1,3 +1,5 @@
+import type { StorySummary } from "@/content/story";
+
 export type FieldCategory =
   | "Culture"
   | "Essay"
@@ -9,28 +11,9 @@ export type FieldCategory =
   | "Players"
   | "Tactics";
 
-export type FieldImage = {
-  src: string;
-  width: number;
-  height: number;
-  alt: string;
-  credit: string;
-  focalPoint?: string;
-};
+export type FieldStory = StorySummary<FieldCategory>;
 
-export type FieldStory = {
-  slug: string;
-  category: FieldCategory;
-  title: string;
-  dek: string;
-  author: string;
-  date: string;
-  dateLabel: string;
-  image?: FieldImage;
-};
-
-// Local editorial material for the FIELD section. These are deliberately
-// timeless, non-linked story concepts until the shared article system exists.
+// Canonical FIELD summaries. Article bodies are explicitly registered elsewhere.
 export const fieldStories = [
   {
     slug: "what-the-floodlights-remember",

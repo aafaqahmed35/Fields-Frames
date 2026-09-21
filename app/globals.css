@@ -81,6 +81,22 @@ a {
   text-underline-offset: 0.2em;
 }
 
+.editorial-story-link {
+  color: inherit;
+  text-decoration-color: transparent;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.055em;
+  text-underline-offset: 0.12em;
+  transition: color var(--transition-quick),
+    text-decoration-color var(--transition-quick);
+}
+
+.editorial-story-link:hover,
+.editorial-story-link:focus-visible {
+  color: var(--color-accent);
+  text-decoration-color: currentColor;
+}
+
 button,
 input,
 select,
@@ -160,5 +176,9 @@ textarea:focus-visible {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .editorial-story-link {
+    transition: none;
   }
 }
