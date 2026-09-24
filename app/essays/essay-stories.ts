@@ -1,4 +1,4 @@
-import type { StorySummary } from "@/content/story";
+import { defineStories, type StorySummary } from "@/content/story";
 
 export type EssayCategory =
   | "ATTENTION"
@@ -20,7 +20,7 @@ export type EssayStory = StorySummary<EssayCategory> & {
   excerpt?: string;
 };
 
-export const essayStories: EssayStory[] = [
+export const essayStories = defineStories([
   {
     slug: "the-case-for-looking-out-of-the-window",
     category: "ATTENTION",
@@ -29,7 +29,6 @@ export const essayStories: EssayStory[] = [
     dek: "A view with nothing urgent in it can return us to the scale of our own lives.",
     author: "Leila Arun",
     date: "2026-09-18",
-    dateLabel: "18 September 2026",
     readingMinutes: 9,
     excerpt:
       "The window asks very little of us. It offers weather, repetition, an unknown person crossing the street—and, if we stay long enough, the slow return of our attention.",
@@ -50,7 +49,6 @@ export const essayStories: EssayStory[] = [
     dek: "Why the light in an old kitchen can outlast the address, the furniture, and the people who once gathered there.",
     author: "Mara Venn",
     date: "2026-09-12",
-    dateLabel: "12 September 2026",
     readingMinutes: 8,
   },
   {
@@ -61,7 +59,6 @@ export const essayStories: EssayStory[] = [
     dek: "The ten unclaimed minutes before anyone else arrives are not empty time.",
     author: "Nikhil Sethi",
     date: "2026-09-09",
-    dateLabel: "9 September 2026",
     readingMinutes: 4,
   },
   {
@@ -72,7 +69,6 @@ export const essayStories: EssayStory[] = [
     dek: "A blunt pencil, a dead key, a receipt from another decade: private museums rarely announce themselves.",
     author: "Jon Bell",
     date: "2026-09-04",
-    dateLabel: "4 September 2026",
     readingMinutes: 6,
   },
   {
@@ -83,7 +79,6 @@ export const essayStories: EssayStory[] = [
     dek: "A familiar route is a record kept in shopfronts, scaffolding, faces, and the things we fail to notice leaving.",
     author: "Sofia Reyes",
     date: "2026-08-28",
-    dateLabel: "28 August 2026",
     readingMinutes: 10,
     image: {
       src: "/images/editorial/journal-rain-window.jpg",
@@ -102,7 +97,6 @@ export const essayStories: EssayStory[] = [
     dek: "Some relationships are sustained less by occasions than by the quiet traffic of remembered details.",
     author: "Amelia Hart",
     date: "2026-08-23",
-    dateLabel: "23 August 2026",
     readingMinutes: 5,
   },
   {
@@ -113,7 +107,6 @@ export const essayStories: EssayStory[] = [
     dek: "Recommendation systems do not only predict preference. Slowly, politely, they furnish the room in which preference is formed.",
     author: "Ishaan Malik",
     date: "2026-08-17",
-    dateLabel: "17 August 2026",
     readingMinutes: 11,
   },
   {
@@ -124,7 +117,6 @@ export const essayStories: EssayStory[] = [
     dek: "Old messages survive in abundance, but abundance is not the same as memory.",
     author: "Mara Venn",
     date: "2026-08-10",
-    dateLabel: "10 August 2026",
     readingMinutes: 7,
   },
   {
@@ -135,7 +127,6 @@ export const essayStories: EssayStory[] = [
     dek: "The small intervals that once belonged to nobody now arrive with a screen and a task attached.",
     author: "Leila Arun",
     date: "2026-08-03",
-    dateLabel: "3 August 2026",
     readingMinutes: 5,
   },
   {
@@ -146,7 +137,6 @@ export const essayStories: EssayStory[] = [
     dek: "Its great virtue is not permanence but permission: a place where a thought can arrive without having to perform.",
     author: "Jon Bell",
     date: "2026-07-27",
-    dateLabel: "27 July 2026",
     readingMinutes: 6,
   },
   {
@@ -157,7 +147,6 @@ export const essayStories: EssayStory[] = [
     dek: "Leave the sentence alone overnight and it may return with less certainty and more truth.",
     author: "Amelia Hart",
     date: "2026-07-19",
-    dateLabel: "19 July 2026",
     readingMinutes: 4,
   },
   {
@@ -168,7 +157,6 @@ export const essayStories: EssayStory[] = [
     dek: "Not every refusal to document a moment is a claim to have lived it more fully.",
     author: "Sofia Reyes",
     date: "2026-07-11",
-    dateLabel: "11 July 2026",
     readingMinutes: 5,
   },
   {
@@ -179,7 +167,6 @@ export const essayStories: EssayStory[] = [
     dek: "A city has a rough, repetitive score. Hearing it again changes the distance between the street and the self.",
     author: "Nikhil Sethi",
     date: "2026-07-02",
-    dateLabel: "2 July 2026",
     readingMinutes: 4,
   },
   {
@@ -190,7 +177,6 @@ export const essayStories: EssayStory[] = [
     dek: "Not every open hour is waiting to become a better version of itself.",
     author: "Ishaan Malik",
     date: "2026-06-24",
-    dateLabel: "24 June 2026",
     readingMinutes: 7,
   },
-];
+] as const satisfies readonly Omit<EssayStory, "dateLabel">[]);

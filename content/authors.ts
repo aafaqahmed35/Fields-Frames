@@ -75,6 +75,21 @@ export const authors = {
 
 export type AuthorName = keyof typeof authors;
 
-export function getAuthor(name: AuthorName) {
-  return authors[name];
+export type Author = {
+  id: string;
+  name: string;
+  slug: string;
+  bio: string;
+};
+
+export function getAuthor(name: AuthorName): Author {
+  const author = authors[name];
+  const slug = name
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+  return { ...author, id: `author-${slug}`, slug };
 }

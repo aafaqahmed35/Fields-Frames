@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { StoryLink } from "@/components/story-link";
+import { resolveCuratedStories } from "@/content/source";
 
 import { essayStories, type EssayStory } from "./essay-stories";
 import styles from "./essays.module.css";
@@ -24,33 +25,32 @@ function StoryMeta({ story }: { story: EssayStory }) {
   );
 }
 
-const [
-  leadStory,
-  rememberedRoomsStory,
-  earlyStory,
-  objectsStory,
-  streetStory,
-  friendshipStory,
-  tasteStory,
-  inboxStory,
-  workStory,
-  notebookStory,
-  unfinishedStory,
-  photographsStory,
-  headphonesStory,
-  afternoonStory,
-] = essayStories;
+export default async function EssaysPage() {
+  const [
+    leadStory,
+    rememberedRoomsStory,
+    earlyStory,
+    objectsStory,
+    streetStory,
+    friendshipStory,
+    tasteStory,
+    inboxStory,
+    workStory,
+    notebookStory,
+    unfinishedStory,
+    photographsStory,
+    headphonesStory,
+    afternoonStory,
+  ] = await resolveCuratedStories<EssayStory>("ESSAYS", essayStories);
+  const closeAttentionStories = [rememberedRoomsStory, earlyStory, objectsStory];
+  const systemsNotes = [inboxStory, workStory];
+  const marginStories = [
+    notebookStory,
+    unfinishedStory,
+    photographsStory,
+    headphonesStory,
+  ];
 
-const closeAttentionStories = [rememberedRoomsStory, earlyStory, objectsStory];
-const systemsNotes = [inboxStory, workStory];
-const marginStories = [
-  notebookStory,
-  unfinishedStory,
-  photographsStory,
-  headphonesStory,
-];
-
-export default function EssaysPage() {
   return (
     <div className={styles.essaysPage}>
       <header className={`editorial-container-wide ${styles.opening}`}>

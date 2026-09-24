@@ -1,6 +1,10 @@
 import { cinemaStories } from "@/app/cinema/cinema-stories";
 import { essayStories } from "@/app/essays/essay-stories";
 import { fieldStories } from "@/app/football/field-stories";
+import {
+  getArticleSummaries,
+  resolveContentSourceMode,
+} from "@/content/source";
 import type { EditorialSection, StoryImage, StorySummary } from "@/content/story";
 
 export type StorySection = EditorialSection;
@@ -9,6 +13,7 @@ export type { StoryImage };
 export type HomepageStory = Omit<StorySummary, "category"> & {
   section: StorySection;
   label: string;
+  dekOverride?: string;
 };
 
 function storyBySlug(
@@ -35,6 +40,7 @@ function homepageStory(
     section,
     label,
     dek: homepageDek ?? story.dek,
+    dekOverride: homepageDek,
   };
 }
 
@@ -95,3 +101,35 @@ export const homepageStories = [
     "Ideas",
   ),
 ] as const satisfies readonly HomepageStory[];
+
+export async function getHomepageStories(): Promise<readonly HomepageStory[]> {
+  if (resolveContentSourceMode() === "local") {
+    return homepageStories;
+  }
+
+  const summaries = (
+    await Promise.all(
+      (["FIELD", "CINEMA", "ESSAYS"] as const).map((section) =>
+        getArticleSummaries(section),
+      ),
+    )
+  ).flat();
+  const byIdentity = new Map(
+    summaries.map((story) => [`${story.section}/${story.slug}`, story]),
+  );
+
+  return homepageStories.map((story) => {
+    const summary = byIdentity.get(`${story.section}/${story.slug}`);
+    if (!summary) return story;
+
+    return {
+      ...story,
+      author: summary.author,
+      date: summary.date,
+      dateLabel: summary.dateLabel,
+      dek: story.dekOverride ?? summary.dek,
+      image: summary.image,
+      title: summary.title,
+    };
+  });
+}

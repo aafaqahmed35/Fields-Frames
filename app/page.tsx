@@ -8,24 +8,8 @@ import {
   StoryMeta,
   StoryVisual,
 } from "./_homepage/story-elements";
-import { homepageStories } from "./_homepage/stories";
+import { getHomepageStories } from "./_homepage/stories";
 import styles from "./home.module.css";
-
-const [
-  leadStory,
-  windowEssay,
-  editingStory,
-  secondBallStory,
-  cinemaStory,
-  unfinishedThought,
-  groundStory,
-  closeUpStory,
-  notebookStory,
-  fullBackStory,
-] = homepageStories;
-
-const primaryDispatches = [groundStory, closeUpStory];
-const continuingDispatches = [notebookStory, fullBackStory];
 
 const gateways = [
   { section: "FIELD" as const, href: "/football", index: "01" },
@@ -33,7 +17,22 @@ const gateways = [
   { section: "ESSAYS" as const, href: "/essays", index: "03" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [
+    leadStory,
+    windowEssay,
+    editingStory,
+    secondBallStory,
+    cinemaStory,
+    unfinishedThought,
+    groundStory,
+    closeUpStory,
+    notebookStory,
+    fullBackStory,
+  ] = await getHomepageStories();
+  const primaryDispatches = [groundStory, closeUpStory];
+  const continuingDispatches = [notebookStory, fullBackStory];
+
   return (
     <div className={styles.homePage}>
       <div className={`editorial-container-wide ${styles.frontMatter}`}>

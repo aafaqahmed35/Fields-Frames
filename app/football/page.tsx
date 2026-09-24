@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { StoryLink } from "@/components/story-link";
+import { resolveCuratedStories } from "@/content/source";
 
 import { fieldStories, type FieldStory } from "./field-stories";
 import styles from "./football.module.css";
@@ -22,32 +23,31 @@ function StoryMeta({ story, inverse = false }: { story: FieldStory; inverse?: bo
   );
 }
 
-const [
-  leadStory,
-  secondBallStory,
-  fullBackStory,
-  pressStory,
-  groundStory,
-  walkStory,
-  songsStory,
-  keeperStory,
-  standStory,
-  fiveASideStory,
-  trainStory,
-  schoolyardStory,
-] = fieldStories;
+export default async function FootballPage() {
+  const [
+    leadStory,
+    secondBallStory,
+    fullBackStory,
+    pressStory,
+    groundStory,
+    walkStory,
+    songsStory,
+    keeperStory,
+    standStory,
+    fiveASideStory,
+    trainStory,
+    schoolyardStory,
+  ] = await resolveCuratedStories<FieldStory>("FIELD", fieldStories);
+  const analysisStories = [secondBallStory, fullBackStory, pressStory];
+  const cultureStories = [walkStory, songsStory];
+  const notebookStories = [
+    keeperStory,
+    standStory,
+    fiveASideStory,
+    trainStory,
+    schoolyardStory,
+  ];
 
-const analysisStories = [secondBallStory, fullBackStory, pressStory];
-const cultureStories = [walkStory, songsStory];
-const notebookStories = [
-  keeperStory,
-  standStory,
-  fiveASideStory,
-  trainStory,
-  schoolyardStory,
-];
-
-export default function FootballPage() {
   return (
     <div className={styles.fieldPage}>
       <header className={`editorial-container-wide ${styles.opening}`}>

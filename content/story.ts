@@ -1,4 +1,4 @@
-import type { AuthorName } from "./authors";
+import { formatPublicationDate } from "./editorial-utils";
 
 export type EditorialSection = "FIELD" | "CINEMA" | "ESSAYS";
 
@@ -17,10 +17,32 @@ export type StorySummary<Category extends string = string> = {
   category: Category;
   title: string;
   dek: string;
-  author: AuthorName;
+  author: string;
   date: string;
   dateLabel: string;
   image?: StoryImage;
+};
+
+export type StorySummaryInput<Category extends string = string> = Omit<
+  StorySummary<Category>,
+  "dateLabel"
+>;
+
+export function defineStories<
+  const Stories extends readonly StorySummaryInput[],
+>(stories: Stories): {
+  readonly [Index in keyof Stories]: Stories[Index] & { dateLabel: string };
+} {
+  return stories.map((story) => ({
+    ...story,
+    dateLabel: formatPublicationDate(story.date),
+  })) as {
+    readonly [Index in keyof Stories]: Stories[Index] & { dateLabel: string };
+  };
+}
+
+export type ArticleSummary = StorySummary & {
+  section: EditorialSection;
 };
 
 export const sectionRoutes: Record<EditorialSection, string> = {

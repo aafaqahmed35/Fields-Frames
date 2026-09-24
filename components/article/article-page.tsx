@@ -1,12 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { getAuthor } from "@/content/authors";
-import {
-  getRelatedArticles,
-  type Article,
-  type EditorialBodyBlock,
-} from "@/content/articles";
+import type { Article, EditorialBodyBlock } from "@/content/articles";
 import { sectionRoutes } from "@/content/story";
 
 import styles from "./article-page.module.css";
@@ -76,7 +71,7 @@ function ArticleStructuredData({ article }: { article: Article }) {
     articleSection: article.section,
     author: {
       "@type": "Person",
-      name: article.author,
+      name: article.authorDetails.name,
     },
   };
 
@@ -91,8 +86,8 @@ function ArticleStructuredData({ article }: { article: Article }) {
 }
 
 export function ArticlePage({ article }: { article: Article }) {
-  const author = getAuthor(article.author);
-  const related = getRelatedArticles(article);
+  const author = article.authorDetails;
+  const related = article.relatedArticles;
   const sectionHref = sectionRoutes[article.section];
 
   return (
@@ -180,27 +175,29 @@ export function ArticlePage({ article }: { article: Article }) {
             <p>{author.bio}</p>
           </section>
 
-          <section className={styles.related} aria-labelledby="related-title">
-            <div className={styles.relatedHeading}>
-              <p className={styles.footerLabel}>Continue reading</p>
-              <h2 id="related-title">Related stories</h2>
-            </div>
-            <div className={styles.relatedGrid}>
-              {related.map((story) => (
-                <article className={styles.relatedStory} key={`${story.section}-${story.slug}`}>
-                  <p>
-                    {story.section} <span aria-hidden="true">/</span> {story.category}
-                  </p>
-                  <h3>
-                    <Link href={`${sectionRoutes[story.section]}/${story.slug}`}>
-                      {story.title}
-                    </Link>
-                  </h3>
-                  <p className={styles.relatedDek}>{story.dek}</p>
-                </article>
-              ))}
-            </div>
-          </section>
+          {related.length > 0 ? (
+            <section className={styles.related} aria-labelledby="related-title">
+              <div className={styles.relatedHeading}>
+                <p className={styles.footerLabel}>Continue reading</p>
+                <h2 id="related-title">Related stories</h2>
+              </div>
+              <div className={styles.relatedGrid}>
+                {related.map((story) => (
+                  <article className={styles.relatedStory} key={`${story.section}-${story.slug}`}>
+                    <p>
+                      {story.section} <span aria-hidden="true">/</span> {story.category}
+                    </p>
+                    <h3>
+                      <Link href={`${sectionRoutes[story.section]}/${story.slug}`}>
+                        {story.title}
+                      </Link>
+                    </h3>
+                    <p className={styles.relatedDek}>{story.dek}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <Link className={styles.sectionReturn} href={sectionHref}>
             <span>Return to</span>

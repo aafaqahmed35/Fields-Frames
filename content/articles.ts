@@ -2,7 +2,14 @@ import { cinemaStories } from "@/app/cinema/cinema-stories";
 import { essayStories } from "@/app/essays/essay-stories";
 import { fieldStories } from "@/app/football/field-stories";
 
-import type { EditorialSection, StoryImage, StorySummary } from "./story";
+import { getAuthor, type Author, type AuthorName } from "./authors";
+import { deriveReadingMinutes, formatPublicationDate } from "./editorial-utils";
+import type {
+  ArticleSummary,
+  EditorialSection,
+  StoryImage,
+  StorySummary,
+} from "./story";
 import { sectionRoutes } from "./story";
 
 export type ArticleMode = "STANDARD" | "FEATURE" | "ESSAY";
@@ -25,15 +32,26 @@ export type Article = StorySummary & {
   section: EditorialSection;
   mode: ArticleMode;
   readingMinutes: number;
+  authorDetails: Author;
   kicker?: string;
   opening?: string;
   body: readonly EditorialBodyBlock[];
   related: readonly ArticleReference[];
+  relatedArticles: readonly ArticleSummary[];
+  seo?: {
+    title?: string;
+    description?: string;
+    socialImage?: StoryImage;
+  };
 };
 
 type ArticleDetails = Omit<
   Article,
-  keyof StorySummary | "section"
+  | keyof StorySummary
+  | "section"
+  | "authorDetails"
+  | "readingMinutes"
+  | "relatedArticles"
 >;
 
 function defineArticle(
@@ -41,7 +59,15 @@ function defineArticle(
   story: StorySummary,
   details: ArticleDetails,
 ): Article {
-  return { ...story, section, ...details };
+  return {
+    ...story,
+    section,
+    ...details,
+    authorDetails: getAuthor(story.author as AuthorName),
+    dateLabel: formatPublicationDate(story.date),
+    readingMinutes: deriveReadingMinutes(details.body, details.opening),
+    relatedArticles: [],
+  };
 }
 
 function storyBySlug(stories: readonly StorySummary[], slug: string) {
@@ -74,7 +100,6 @@ export const articles: readonly Article[] = [
     storyBySlug(fieldStories, "what-the-floodlights-remember"),
     {
       mode: "FEATURE",
-      readingMinutes: 8,
       kicker: "Grounds and belonging",
       opening:
         "Long after the players leave, a football ground continues to hold the evening: rain in the goalmouth, voices in the stand, and light falling on an empty rectangle.",
@@ -146,7 +171,6 @@ export const articles: readonly Article[] = [
     storyBySlug(fieldStories, "the-geometry-of-the-second-ball"),
     {
       mode: "STANDARD",
-      readingMinutes: 7,
       kicker: "Reading the shape",
       opening:
         "The first duel attracts the eye. The second ball reveals the team: its distances, its expectations, and whether eleven players have read the same possibility.",
@@ -222,7 +246,6 @@ export const articles: readonly Article[] = [
     storyBySlug(cinemaStories, "the-room-before-the-picture-begins"),
     {
       mode: "FEATURE",
-      readingMinutes: 8,
       kicker: "The audience",
       opening:
         "Before the projector makes its first image, the cinema is already at work: adjusting our eyes, gathering strangers, and making waiting feel like part of the film.",
@@ -302,7 +325,6 @@ export const articles: readonly Article[] = [
     storyBySlug(cinemaStories, "cutting-on-the-breath"),
     {
       mode: "STANDARD",
-      readingMinutes: 7,
       kicker: "Craft / Editing",
       opening:
         "Some cuts announce a new fact. Others arrive at the instant a body has finished thinking, using breath to turn separate images into one continuous attention.",
@@ -378,7 +400,6 @@ export const articles: readonly Article[] = [
     storyBySlug(essayStories, "the-case-for-looking-out-of-the-window"),
     {
       mode: "ESSAY",
-      readingMinutes: 9,
       kicker: "On attention",
       opening:
         "The window asks very little of us. It offers weather, repetition, an unknown person crossing the street—and, if we stay long enough, the slow return of our attention.",
@@ -473,7 +494,6 @@ export const articles: readonly Article[] = [
     storyBySlug(essayStories, "the-taste-you-did-not-choose"),
     {
       mode: "ESSAY",
-      readingMinutes: 10,
       kicker: "Systems, lived",
       opening:
         "Recommendation systems promise to learn what we like. The quieter question is what happens while we learn to like what they keep placing near us.",
@@ -555,9 +575,13 @@ export const articles: readonly Article[] = [
 ];
 
 export function getArticle(section: EditorialSection, slug: string) {
-  return articles.find(
+  const article = articles.find(
     (article) => article.section === section && article.slug === slug,
   );
+
+  return article
+    ? { ...article, relatedArticles: getRelatedArticles(article).map(toArticleSummary) }
+    : undefined;
 }
 
 export function getSectionArticles(section: EditorialSection) {
@@ -572,7 +596,11 @@ export function getArticleHref(section: EditorialSection, slug: string) {
 
 export function getRelatedArticles(article: Article) {
   return article.related.map((reference) => {
-    const related = getArticle(reference.section, reference.slug);
+    const related = articles.find(
+      (candidate) =>
+        candidate.section === reference.section &&
+        candidate.slug === reference.slug,
+    );
 
     if (!related) {
       throw new Error(
@@ -582,4 +610,18 @@ export function getRelatedArticles(article: Article) {
 
     return related;
   });
+}
+
+function toArticleSummary(article: Article): ArticleSummary {
+  return {
+    author: article.author,
+    category: article.category,
+    date: article.date,
+    dateLabel: article.dateLabel,
+    dek: article.dek,
+    image: article.image,
+    section: article.section,
+    slug: article.slug,
+    title: article.title,
+  };
 }

@@ -1,13 +1,13 @@
 import { ArticlePage } from "@/components/article/article-page";
-import { getSectionArticles } from "@/content/articles";
+import { getArticleSlugs } from "@/content/source";
 import {
   buildArticleMetadata,
   resolveArticle,
   type ArticlePageProps,
 } from "@/content/article-page";
 
-export function generateStaticParams() {
-  return getSectionArticles("ESSAYS").map(({ slug }) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getArticleSlugs("ESSAYS")).map((slug) => ({ slug }));
 }
 
 export function generateMetadata({ params }: ArticlePageProps) {

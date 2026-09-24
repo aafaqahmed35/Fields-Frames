@@ -6,12 +6,21 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "content:validate": "node --import tsx scripts/validate-content.ts",
+    "sanity:schema": "sanity schema extract --enforce-required-fields --force",
+    "sanity:typegen": "sanity typegen generate",
+    "sanity:validate": "npm run sanity:schema && npm run sanity:typegen && npm run content:validate",
+    "sanity:seed": "node --import tsx scripts/seed-sanity.ts"
   },
   "dependencies": {
+    "@sanity/image-url": "2.1.1",
     "next": "16.3.5",
+    "next-sanity": "13.3.4",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "sanity": "6.15.0",
+    "styled-components": "6.5.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",
@@ -21,9 +30,10 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.5",
     "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
     "typescript": "5.9.3"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.12.0"
   }
 }

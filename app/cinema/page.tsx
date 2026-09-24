@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { StoryLink } from "@/components/story-link";
+import { resolveCuratedStories } from "@/content/source";
 
 import { cinemaStories, type CinemaStory } from "./cinema-stories";
 import styles from "./cinema.module.css";
@@ -22,26 +23,25 @@ function StoryMeta({ story, inverse = false }: { story: CinemaStory; inverse?: b
   );
 }
 
-const [
-  leadStory,
-  editingStory,
-  closeUpStory,
-  soundStory,
-  performanceStory,
-  designStory,
-  screenwritingStory,
-  lastRowStory,
-  neighbourhoodStory,
-  projectionStory,
-  creditsStory,
-  afterimageStory,
-] = cinemaStories;
+export default async function CinemaPage() {
+  const [
+    leadStory,
+    editingStory,
+    closeUpStory,
+    soundStory,
+    performanceStory,
+    designStory,
+    screenwritingStory,
+    lastRowStory,
+    neighbourhoodStory,
+    projectionStory,
+    creditsStory,
+    afterimageStory,
+  ] = await resolveCuratedStories<CinemaStory>("CINEMA", cinemaStories);
+  const craftNotes = [closeUpStory, soundStory];
+  const performanceNotes = [designStory, screenwritingStory];
+  const audienceNotes = [neighbourhoodStory, projectionStory, creditsStory];
 
-const craftNotes = [closeUpStory, soundStory];
-const performanceNotes = [designStory, screenwritingStory];
-const audienceNotes = [neighbourhoodStory, projectionStory, creditsStory];
-
-export default function CinemaPage() {
   return (
     <div className={styles.cinemaPage}>
       <section className={styles.opening} aria-labelledby="cinema-title">

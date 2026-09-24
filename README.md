@@ -11,13 +11,13 @@ Its three editorial sections are:
 
 ## Project status
 
-This repository contains the frontend and global design-language foundation: an
-editorial typography system, shared publication shell, the full homepage
-composition, complete section indexes for FIELD, CINEMA, and ESSAYS, and a
-shared article-detail system with representative typed local article content.
+This repository contains the publication frontend, global design system, curated
+homepage and section indexes, shared article-detail renderer, and a Sanity-backed
+production editorial content foundation. Six representative P9 articles remain as
+a controlled local migration fallback and deterministic CMS seed source.
 
-No CMS, database, authentication system, admin interface, or publishing pipeline
-has been selected or implemented. Article content remains local and typed.
+Publishing lifecycle features such as preview, scheduling, webhooks, and archive
+operations are intentionally deferred to P11.
 
 ## Technology
 
@@ -25,6 +25,7 @@ has been selected or implemented. Article content remains local and typed.
 - React and TypeScript
 - Tailwind CSS
 - ESLint
+- Sanity Studio and Content Lake
 - npm
 
 Global foundation styles live in `app/globals.css` and `app/styles/`. Shared shell
@@ -33,7 +34,7 @@ remain local to their routes.
 
 ## Local development
 
-Node.js 20.9 or newer is required.
+Node.js 22.12 or newer is required by the current Sanity Studio release.
 
 ```bash
 npm install
@@ -48,6 +49,21 @@ For production verification:
 npm run lint
 npm run build
 ```
+
+## Editorial content
+
+Sanity Studio is embedded at `/studio`. Without Sanity configuration it shows a
+setup boundary while the publication continues to build using the explicit local
+migration source.
+
+```bash
+npm run sanity:validate
+npm run sanity:seed          # credential-free dry run
+```
+
+Environment variables, source selection, authoring rules, and the authorized seed
+procedure are documented in [docs/content-cms.md](docs/content-cms.md). No project ID,
+dataset authorization, or token is committed.
 
 ## Routes
 
