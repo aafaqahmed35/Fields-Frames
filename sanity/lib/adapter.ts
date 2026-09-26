@@ -1,4 +1,5 @@
 import { createImageUrlBuilder } from "@sanity/image-url";
+import { stegaClean } from "next-sanity";
 
 import {
   articleModes,
@@ -55,16 +56,20 @@ function optionalString(value: unknown, field: string): string | undefined {
 }
 
 function sectionValue(value: unknown, field: string): EditorialSection {
-  if (value === "FIELD" || value === "CINEMA" || value === "ESSAYS") {
-    return value;
+  const cleanValue = typeof value === "string" ? stegaClean(value) : value;
+
+  if (cleanValue === "FIELD" || cleanValue === "CINEMA" || cleanValue === "ESSAYS") {
+    return cleanValue;
   }
 
   throw new CmsContentError(`${field} has an unsupported section`);
 }
 
 function modeValue(value: unknown): ArticleMode {
-  if (typeof value === "string" && (articleModes as readonly string[]).includes(value)) {
-    return value as ArticleMode;
+  const cleanValue = typeof value === "string" ? stegaClean(value) : value;
+
+  if (typeof cleanValue === "string" && (articleModes as readonly string[]).includes(cleanValue)) {
+    return cleanValue as ArticleMode;
   }
 
   throw new CmsContentError("mode has an unsupported value");
@@ -237,10 +242,11 @@ export function adaptSanitySummary(
   const raw = record(value, "article summary");
   const section = sectionValue(raw.section, "article summary.section");
   const category = requiredString(raw.category, "article summary.category");
+  const cleanCategory = stegaClean(category);
   const date = requiredString(raw.publishedAt, "article summary.publishedAt");
 
-  if (!isCategoryForSection(section, category)) {
-    throw new CmsContentError(`${category} is not valid for ${section}`);
+  if (!isCategoryForSection(section, cleanCategory)) {
+    throw new CmsContentError(`${cleanCategory} is not valid for ${section}`);
   }
 
   return {
@@ -263,14 +269,17 @@ export function adaptSanityArticle(
   const raw = record(value, "article");
   const section = sectionValue(raw.section, "article.section");
   const category = requiredString(raw.category, "article.category");
+  const cleanCategory = stegaClean(category);
   const date = requiredString(raw.publishedAt, "article.publishedAt");
   const authorDetails = adaptAuthor(raw.author);
   const body = adaptBody(raw.body, config);
   const opening = optionalString(raw.opening, "article.opening");
-  const relatedValues = raw.relatedArticles ?? [];
+  const relatedValues = Array.isArray(raw.relatedArticles)
+    ? raw.relatedArticles.filter((related) => related !== null && related !== undefined)
+    : raw.relatedArticles ?? [];
 
-  if (!isCategoryForSection(section, category)) {
-    throw new CmsContentError(`${category} is not valid for ${section}`);
+  if (!isCategoryForSection(section, cleanCategory)) {
+    throw new CmsContentError(`${cleanCategory} is not valid for ${section}`);
   }
   if (!Array.isArray(relatedValues) || relatedValues.length > 3) {
     throw new CmsContentError("relatedArticles must contain zero to three articles");

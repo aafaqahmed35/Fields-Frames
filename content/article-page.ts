@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import type { Article } from "./articles";
-import { getArticle } from "./source";
+import { getArticle, type ArticleFetchOptions } from "./source";
 import type { EditorialSection } from "./story";
 
 export type ArticlePageProps = {
@@ -12,9 +13,10 @@ export type ArticlePageProps = {
 export async function resolveArticle(
   section: EditorialSection,
   params: ArticlePageProps["params"],
+  options?: ArticleFetchOptions,
 ): Promise<Article> {
   const { slug } = await params;
-  const article = await getArticle(section, slug);
+  const article = await getArticle(section, slug, options);
 
   if (!article) {
     notFound();
@@ -28,7 +30,8 @@ export async function buildArticleMetadata(
   section: EditorialSection,
   params: ArticlePageProps["params"],
 ): Promise<Metadata> {
-  const article = await resolveArticle(section, params);
+  const article = await resolveArticle(section, params, { stega: false });
+  const isPreview = (await draftMode()).isEnabled;
   const socialImage =
     article.seo?.socialImage ??
     (article.image?.src.startsWith("https://") ? article.image : undefined);
@@ -36,6 +39,9 @@ export async function buildArticleMetadata(
   return {
     title: article.seo?.title ?? article.title,
     description: article.seo?.description ?? article.dek,
+    robots: isPreview
+      ? { index: false, follow: false, nocache: true }
+      : undefined,
     openGraph: {
       type: "article",
       title: article.seo?.title ?? article.title,

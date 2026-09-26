@@ -8,9 +8,10 @@
     "start": "next start",
     "lint": "eslint .",
     "content:validate": "node --import tsx scripts/validate-content.ts",
+    "publishing:validate": "node --import tsx scripts/validate-publishing.ts",
     "sanity:schema": "sanity schema extract --enforce-required-fields --force",
     "sanity:typegen": "sanity typegen generate",
-    "sanity:validate": "npm run sanity:schema && npm run sanity:typegen && npm run content:validate",
+    "sanity:validate": "npm run sanity:schema && npm run sanity:typegen && npm run content:validate && npm run publishing:validate",
     "sanity:seed": "node --import tsx scripts/seed-sanity.ts"
   },
   "dependencies": {

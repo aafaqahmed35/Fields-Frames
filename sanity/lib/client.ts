@@ -16,7 +16,7 @@ export function getSanityClient() {
       dataset,
       apiVersion: sanityApiVersion,
       perspective: "published",
-      token: process.env.SANITY_API_READ_TOKEN,
+      stega: false,
       useCdn: true,
     });
   }

@@ -1,4 +1,5 @@
 import { ArticlePage } from "@/components/article/article-page";
+import { PreviewBanner } from "@/components/preview-banner";
 import { getArticleSlugs } from "@/content/source";
 import {
   buildArticleMetadata,
@@ -17,5 +18,10 @@ export function generateMetadata({ params }: ArticlePageProps) {
 export default async function EssayArticlePage({ params }: ArticlePageProps) {
   const article = await resolveArticle("ESSAYS", params);
 
-  return <ArticlePage article={article} />;
+  return (
+    <>
+      <ArticlePage article={article} />
+      <PreviewBanner />
+    </>
+  );
 }

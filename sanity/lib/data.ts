@@ -3,7 +3,12 @@ import type { ArticleSummary, EditorialSection } from "@/content/story";
 import { requirePublicSanityConfig } from "@/sanity/env";
 
 import { adaptSanityArticle, adaptSanitySummary } from "./adapter";
-import { getSanityClient } from "./client";
+import {
+  articleCacheTag,
+  articleIdentityCacheTag,
+  sectionCacheTag,
+} from "./cache";
+import { sanityFetch } from "./fetch";
 import {
   ARTICLE_QUERY,
   ARTICLE_SLUGS_QUERY,
@@ -13,15 +18,29 @@ import {
 export async function fetchSanityArticle(
   section: EditorialSection,
   slug: string,
+  options: { stega?: boolean } = {},
 ): Promise<Article | undefined> {
-  const raw: unknown = await getSanityClient().fetch(ARTICLE_QUERY, { section, slug });
+  const raw = await sanityFetch<unknown>({
+    query: ARTICLE_QUERY,
+    params: { section, slug },
+    stega: options.stega,
+    tags: [
+      articleCacheTag,
+      articleIdentityCacheTag(section, slug),
+    ],
+  });
   return raw ? adaptSanityArticle(raw, requirePublicSanityConfig()) : undefined;
 }
 
 export async function fetchSanityArticleSlugs(
   section: EditorialSection,
 ): Promise<readonly string[]> {
-  const raw: unknown = await getSanityClient().fetch(ARTICLE_SLUGS_QUERY, { section });
+  const raw = await sanityFetch<unknown>({
+    query: ARTICLE_SLUGS_QUERY,
+    params: { section },
+    preview: false,
+    tags: [articleCacheTag, sectionCacheTag(section)],
+  });
   if (!Array.isArray(raw)) {
     throw new Error("Malformed Sanity response: article slug query must return an array");
   }
@@ -37,7 +56,12 @@ export async function fetchSanityArticleSlugs(
 export async function fetchSanityArticleSummaries(
   section: EditorialSection,
 ): Promise<readonly ArticleSummary[]> {
-  const raw: unknown = await getSanityClient().fetch(ARTICLE_SUMMARIES_QUERY, { section });
+  const raw = await sanityFetch<unknown>({
+    query: ARTICLE_SUMMARIES_QUERY,
+    params: { section },
+    preview: false,
+    tags: [articleCacheTag, sectionCacheTag(section)],
+  });
   if (!Array.isArray(raw)) {
     throw new Error("Malformed Sanity response: article summary query must return an array");
   }

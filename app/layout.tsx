@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Newsreader, Source_Sans_3 } from "next/font/google";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
 import type { ReactNode } from "react";
 
 import { PublicationFooter } from "@/components/publication-footer";
@@ -35,7 +37,9 @@ export const metadata: Metadata = {
     "An independent publication about football, cinema, life, culture, and ideas.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const isPreview = (await draftMode()).isEnabled;
+
   return (
     <html lang="en" className={`${newsreader.variable} ${sourceSans.variable}`}>
       <body>
@@ -47,6 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <main id="main-content">{children}</main>
           <PublicationFooter />
         </div>
+        {isPreview ? <VisualEditing /> : null}
       </body>
     </html>
   );

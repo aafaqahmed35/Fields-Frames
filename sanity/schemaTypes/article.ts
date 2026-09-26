@@ -1,17 +1,20 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import {
+  defineArrayMember,
+  defineField,
+  defineType,
+  getPublishedId,
+} from "sanity";
 
 import {
   allCategories,
   articleModes,
   isCategoryForSection,
 } from "../../content/editorial-constants";
-import type { EditorialSection } from "../../content/story";
-
-const sections: readonly EditorialSection[] = ["FIELD", "CINEMA", "ESSAYS"];
-
-function isSection(value: unknown): value is EditorialSection {
-  return typeof value === "string" && sections.includes(value as EditorialSection);
-}
+import {
+  editorialSections,
+  isEditorialSection,
+  isValidArticleSlug,
+} from "../../content/editorial-routing";
 
 export const article = defineType({
   name: "article",
@@ -36,34 +39,68 @@ export const article = defineType({
       title: "Slug",
       type: "slug",
       group: "editorial",
-      description: "The URL-safe article identity inside its section.",
+      description:
+        "The URL-safe identity inside this section. Changing a published slug changes its canonical URL and must be treated as an editorial migration.",
       options: {
         source: "title",
         maxLength: 96,
         isUnique: async (value, context) => {
           const section = context.document?.section;
-          const currentId = context.document?._id?.replace(/^drafts\./, "");
+          const documentId = context.document?._id;
+          const publishedId = documentId ? getPublishedId(documentId) : undefined;
 
-          if (!value || !isSection(section) || !currentId) {
+          if (!value || !isEditorialSection(section) || !publishedId) {
             return true;
           }
 
           const duplicateId = await context
             .getClient({ apiVersion: "2026-02-01" })
             .fetch<string | null>(
-              `*[_type == "article" && section == $section && slug.current == $slug && !(_id in [$id, $draftId])][0]._id`,
+              `*[
+                _type == "article" &&
+                section == $section &&
+                slug.current == $slug &&
+                !sanity::versionOf($publishedId)
+              ][0]._id`,
               {
-                draftId: `drafts.${currentId}`,
-                id: currentId,
+                publishedId,
                 section,
                 slug: value,
               },
+              { perspective: "raw" },
             );
 
           return !duplicateId;
         },
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => [
+        rule.required().custom((value) =>
+          isValidArticleSlug(value?.current)
+            ? true
+            : "Use no more than 96 lowercase letters/digits separated only by single hyphens",
+        ),
+        rule
+          .custom(async (value, context) => {
+            const documentId = context.document?._id;
+            if (!documentId || !value?.current) {
+              return true;
+            }
+
+            const publishedId = getPublishedId(documentId);
+            const publishedSlug = await context
+              .getClient({ apiVersion: "2026-02-01" })
+              .fetch<string | null>(
+                `*[_id == $publishedId][0].slug.current`,
+                { publishedId },
+                { perspective: "published" },
+              );
+
+            return publishedSlug && publishedSlug !== value.current
+              ? `Publishing this draft will move the canonical URL from ${publishedSlug} to ${value.current}. Confirm the SEO and inbound-link consequence before publishing.`
+              : true;
+          })
+          .warning(),
+      ],
     }),
     defineField({
       name: "section",
@@ -72,7 +109,7 @@ export const article = defineType({
       group: "editorial",
       options: {
         layout: "radio",
-        list: sections.map((section) => ({ title: section, value: section })),
+        list: editorialSections.map((section) => ({ title: section, value: section })),
       },
       validation: (rule) => rule.required(),
     }),
@@ -89,7 +126,7 @@ export const article = defineType({
         rule.required().custom((value, context) => {
           const section = context.document?.section;
 
-          if (!isSection(section) || typeof value !== "string") {
+          if (!isEditorialSection(section) || typeof value !== "string") {
             return "Choose a section and category";
           }
 
@@ -205,6 +242,7 @@ export const article = defineType({
         defineArrayMember({
           type: "reference",
           to: [{ type: "article" }],
+          weak: true,
         }),
       ],
       validation: (rule) =>
@@ -213,13 +251,15 @@ export const article = defineType({
             return true;
           }
 
-          const currentId = context.document?._id?.replace(/^drafts\./, "");
+          const currentId = context.document?._id
+            ? getPublishedId(context.document._id)
+            : undefined;
           const selfReference = references.some((reference) => {
             if (!reference || typeof reference !== "object" || !("_ref" in reference)) {
               return false;
             }
 
-            const referenceId = String(reference._ref).replace(/^drafts\./, "");
+            const referenceId = getPublishedId(String(reference._ref));
             return currentId === referenceId;
           });
 

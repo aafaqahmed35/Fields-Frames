@@ -128,7 +128,7 @@ const fixture = {
     crop: { left: 0.1, right: 0.1, top: 0, bottom: 0 },
     hotspot: { x: 0.5, y: 0.5 },
   },
-  relatedArticles: [],
+  relatedArticles: [null],
 };
 
 const adapted = adaptSanityArticle(fixture, {
@@ -138,6 +138,7 @@ const adapted = adaptSanityArticle(fixture, {
 assert.equal(adapted.authorDetails.name, "Fixture Writer");
 assert.equal(adapted.dateLabel, "18 September 2026");
 assert.equal(adapted.body[1]?.type, "list");
+assert.deepEqual(adapted.relatedArticles, []);
 assert.deepEqual(
   adapted.body.map((block) => block.type),
   ["paragraph", "list", "heading", "pullQuote", "figure", "divider", "note", "list"],

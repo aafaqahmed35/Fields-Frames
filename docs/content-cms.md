@@ -16,8 +16,12 @@ Copy `.env.example` to `.env.local` and provide the applicable values.
 
 - `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` are public
   Sanity identifiers used by the read client, image allowlist, and Studio.
-- `SANITY_API_READ_TOKEN` is optional for public datasets and remains server-only.
-- `SANITY_API_WRITE_TOKEN` is server-only and is used only by the seed command.
+- `SANITY_API_READ_TOKEN` is a server-only Viewer credential used only for secure
+  draft preview. Public reads do not use it.
+- `SANITY_REVALIDATE_SECRET` is a server-only random secret used to verify signed
+  publication webhooks. It grants no Content Lake access.
+- `SANITY_API_WRITE_TOKEN` is server-only and optional; it is used only by the seed
+  command and remains empty in normal P11 operation.
 - `MIND_MARGIN_CONTENT_SOURCE` is `local` or `sanity`.
 
 When the source variable is absent, the app uses the deliberate local migration
@@ -32,7 +36,8 @@ No cloud project is created by this repository. A Sanity administrator must:
 
 1. Create or select a project and dataset in Sanity.
 2. Put the project ID and dataset in `.env.local`.
-3. Add `http://localhost:3000` as an authenticated CORS origin for the embedded Studio.
+3. Add `http://localhost:3000` as a CORS origin with credentials allowed for
+   Presentation's authenticated preview iframe.
 4. Restart `npm run dev`, then open `/studio` and authenticate with Sanity.
 5. Set `MIND_MARGIN_CONTENT_SOURCE=sanity` only when the dataset is ready to serve.
 
@@ -47,7 +52,9 @@ have fixed FIELD/CINEMA/ESSAYS sections; section-aware category validation; fixe
 FEATURE/STANDARD/ESSAY modes; normalized publication dates; an optional reading-time
 override; author and related-article references; accessible lead/body images with
 crop and hotspot; structured body blocks; and optional SEO overrides. Section + slug
-is the public identity, and Studio checks slug uniqueness within that section.
+is the public identity, and Studio checks slug uniqueness across draft, published, and
+release versions within that section. Related-article references are weak so native
+unpublish remains reversible; public queries omit relationships to unpublished targets.
 
 The body supports paragraphs, level-two/three headings, ordered and unordered lists,
 pull quotes, figures, dividers, and notes. It does not accept HTML, JSX, scripts, or
@@ -85,9 +92,10 @@ Documents use stable IDs and `createIfNotExists`; reruns do not duplicate or ove
 editorial documents. Sanity deduplicates identical uploaded image assets. Remove the
 write token after migration.
 
-## Deliberate P11 boundary
+## Publishing lifecycle
 
-P10 reads published documents and leaves compatible seams in the client, queries,
-source selector, and route data layer. Draft Mode, visual preview, live subscriptions,
-publish-triggered revalidation, webhooks, scheduling, approval, update, and archive
-operations are intentionally not implemented here.
+P11 adds authenticated Draft Mode preview through the embedded Presentation tool,
+published-query cache tags, signed webhook revalidation, native Scheduled Draft
+compatibility, and a reversible unpublish policy. See
+[editorial-publishing.md](editorial-publishing.md) for operation, security, state,
+and recovery details.

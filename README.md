@@ -13,11 +13,9 @@ Its three editorial sections are:
 
 This repository contains the publication frontend, global design system, curated
 homepage and section indexes, shared article-detail renderer, and a Sanity-backed
-production editorial content foundation. Six representative P9 articles remain as
-a controlled local migration fallback and deterministic CMS seed source.
-
-Publishing lifecycle features such as preview, scheduling, webhooks, and archive
-operations are intentionally deferred to P11.
+editorial publishing lifecycle. Editors can draft, securely preview through Sanity
+Presentation, publish, update, schedule when the project plan supports Scheduled
+Drafts, and reversibly unpublish without changing application source.
 
 ## Technology
 
@@ -62,8 +60,10 @@ npm run sanity:seed          # credential-free dry run
 ```
 
 Environment variables, source selection, authoring rules, and the authorized seed
-procedure are documented in [docs/content-cms.md](docs/content-cms.md). No project ID,
-dataset authorization, or token is committed.
+procedure are documented in [docs/content-cms.md](docs/content-cms.md). The complete
+editor/developer lifecycle is in
+[docs/editorial-publishing.md](docs/editorial-publishing.md). No token or shared
+secret is committed.
 
 ## Routes
 

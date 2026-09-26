@@ -19,6 +19,7 @@ import {
 import { publicSanityConfig } from "@/sanity/env";
 
 export type ContentSourceMode = "local" | "sanity";
+export type ArticleFetchOptions = { stega?: boolean };
 
 let warnedAboutProductionDefault = false;
 
@@ -57,10 +58,14 @@ function assertSanityReady() {
 }
 
 export const getArticle = cache(
-  async (section: EditorialSection, slug: string): Promise<Article | undefined> => {
+  async (
+    section: EditorialSection,
+    slug: string,
+    options: ArticleFetchOptions = {},
+  ): Promise<Article | undefined> => {
     if (resolveContentSourceMode() === "sanity") {
       assertSanityReady();
-      return fetchSanityArticle(section, slug);
+      return fetchSanityArticle(section, slug, options);
     }
 
     return getLocalArticle(section, slug);
