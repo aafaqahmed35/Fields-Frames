@@ -1,3 +1,5 @@
+import { resolveHttpOrigin } from "../lib/site-origin";
+
 export const sanityApiVersion = "2026-02-01";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim();
@@ -5,14 +7,17 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET?.trim();
 const configuredSiteOrigin = process.env.NEXT_PUBLIC_SITE_ORIGIN?.trim();
 
 function resolveSiteOrigin(value: string | undefined) {
-  const fallback = "http://localhost:3000";
-  const url = new URL(value || fallback);
-
-  if (url.origin !== url.href.replace(/\/$/, "")) {
-    throw new Error("NEXT_PUBLIC_SITE_ORIGIN must be an origin without a path.");
+  if (!value && process.env.NODE_ENV === "production") {
+    throw new Error("NEXT_PUBLIC_SITE_ORIGIN is required for production Presentation.");
   }
+  return resolveHttpOrigin(value || "http://localhost:3000");
+}
 
-  return url.origin;
+if (projectId && !/^[a-z0-9]+$/.test(projectId)) {
+  throw new Error("NEXT_PUBLIC_SANITY_PROJECT_ID is invalid.");
+}
+if (dataset && !/^[a-z0-9][a-z0-9_-]{0,63}$/.test(dataset)) {
+  throw new Error("NEXT_PUBLIC_SANITY_DATASET is invalid.");
 }
 
 export const publicSanityConfig =

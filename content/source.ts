@@ -11,43 +11,13 @@ import {
   type EditorialSection,
   type StorySummary,
 } from "./story";
-import {
-  fetchSanityArticle,
-  fetchSanityArticleSlugs,
-  fetchSanityArticleSummaries,
-} from "@/sanity/lib/data";
 import { publicSanityConfig } from "@/sanity/env";
 
 export type ContentSourceMode = "local" | "sanity";
 export type ArticleFetchOptions = { stega?: boolean };
 
-let warnedAboutProductionDefault = false;
-
-export function resolveContentSourceMode(
-  env: Partial<
-    Pick<NodeJS.ProcessEnv, "MIND_MARGIN_CONTENT_SOURCE" | "NODE_ENV">
-  > = process.env,
-): ContentSourceMode {
-  const configured = env.MIND_MARGIN_CONTENT_SOURCE;
-
-  if (configured === "local" || configured === "sanity") {
-    return configured;
-  }
-  if (configured) {
-    throw new Error(
-      `Unsupported MIND_MARGIN_CONTENT_SOURCE value: ${configured}. Use "local" or "sanity".`,
-    );
-  }
-
-  if (env.NODE_ENV === "production" && !warnedAboutProductionDefault) {
-    warnedAboutProductionDefault = true;
-    console.warn(
-      "MIND_MARGIN_CONTENT_SOURCE is unset; using the explicit migration fallback (local). Set it to sanity for CMS-backed production content.",
-    );
-  }
-
-  return "local";
-}
+export { resolveContentSourceMode } from "../lib/environment";
+import { resolveContentSourceMode } from "../lib/environment";
 
 function assertSanityReady() {
   if (!publicSanityConfig) {
@@ -65,6 +35,7 @@ export const getArticle = cache(
   ): Promise<Article | undefined> => {
     if (resolveContentSourceMode() === "sanity") {
       assertSanityReady();
+      const { fetchSanityArticle } = await import("@/sanity/lib/data");
       return fetchSanityArticle(section, slug, options);
     }
 
@@ -76,6 +47,7 @@ export const getArticleSlugs = cache(
   async (section: EditorialSection): Promise<readonly string[]> => {
     if (resolveContentSourceMode() === "sanity") {
       assertSanityReady();
+      const { fetchSanityArticleSlugs } = await import("@/sanity/lib/data");
       return fetchSanityArticleSlugs(section);
     }
 
@@ -87,6 +59,7 @@ export const getArticleSummaries = cache(
   async (section: EditorialSection): Promise<readonly ArticleSummary[]> => {
     if (resolveContentSourceMode() === "sanity") {
       assertSanityReady();
+      const { fetchSanityArticleSummaries } = await import("@/sanity/lib/data");
       return fetchSanityArticleSummaries(section);
     }
 

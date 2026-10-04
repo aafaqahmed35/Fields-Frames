@@ -10,6 +10,11 @@ export function resolvePublicOrigin(
   }
   const configured =
     value || env.NEXT_PUBLIC_SITE_ORIGIN?.trim() || "http://localhost:3000";
+  return resolveHttpOrigin(configured);
+}
+
+/** Shared public/canonical origin validation; contains no credentials. */
+export function resolveHttpOrigin(configured: string): string {
   let url: URL;
   try {
     url = new URL(configured);
@@ -17,6 +22,7 @@ export function resolvePublicOrigin(
     throw new Error("Site origin must be a valid HTTP(S) origin.");
   }
   if (
+    !/^https?:\/\/[^/?#\\]+\/?$/i.test(configured) ||
     !["http:", "https:"].includes(url.protocol) ||
     url.username ||
     url.password ||

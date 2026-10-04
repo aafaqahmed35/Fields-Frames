@@ -1,0 +1,23 @@
+.surface {
+  padding-block: var(--space-2xl);
+}
+.surface h1 {
+  font-size: var(--type-h2);
+  max-width: 24ch;
+}
+.surface p {
+  max-width: 55ch;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+.actions button {
+  background: var(--color-text);
+  color: var(--color-surface);
+  border: 0;
+  padding: var(--space-xs) var(--space-sm);
+  cursor: pointer;
+}

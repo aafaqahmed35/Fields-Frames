@@ -44,8 +44,7 @@ Open [http://localhost:3000](http://localhost:3000).
 For production verification:
 
 ```bash
-npm run lint
-npm run build
+SITE_ORIGIN=http://localhost:3000 npm run production:validate
 ```
 
 ## Editorial content
@@ -79,3 +78,6 @@ Legacy routes redirect permanently to their canonical replacements:
 
 - `/films` → `/cinema`
 - `/journal` → `/essays`
+
+Production configuration, security caveats, deployment verification and recovery
+are documented in [docs/production-runbook.md](docs/production-runbook.md).

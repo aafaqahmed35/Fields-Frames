@@ -150,6 +150,16 @@ assert.throws(
   CmsContentError,
 );
 
+// CMS-controlled identities and image geometry must remain safe after publish.
+for (const slug of ["Bad Slug", "../unsafe", "a".repeat(97)]) {
+  assert.throws(() => adaptSanityArticle({ ...fixture, slug }, { projectId: "fixtureproject", dataset: "production" }), CmsContentError);
+}
+assert.match(adapted.image?.src ?? "", /[?&]w=960(?:&|$)/);
+for (const width of [0, -1]) {
+  const leadImage = { ...fixture.leadImage, asset: { ...fixture.leadImage.asset, metadata: { dimensions: { width, height: 800 } } } };
+  assert.throws(() => adaptSanityArticle({ ...fixture, leadImage }, { projectId: "fixtureproject", dataset: "production" }), CmsContentError);
+}
+
 const storyCatalog = [...fieldStories, ...cinemaStories, ...essayStories];
 for (const story of storyCatalog) {
   assert.equal(story.dateLabel, formatPublicationDate(story.date));

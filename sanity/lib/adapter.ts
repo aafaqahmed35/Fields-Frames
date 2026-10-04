@@ -1,3 +1,4 @@
+import { isValidArticleSlug } from "../../content/editorial-routing";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { stegaClean } from "next-sanity";
 
@@ -45,6 +46,12 @@ function requiredString(value: unknown, field: string): string {
   }
 
   return value;
+}
+
+function articleSlug(value: unknown, field: string): string {
+  const slug = stegaClean(requiredString(value, field));
+  if (!isValidArticleSlug(slug)) throw new CmsContentError(`${field} is invalid`);
+  return slug;
 }
 
 function optionalString(value: unknown, field: string): string | undefined {
@@ -101,6 +108,9 @@ function adaptImage(
   const dimensions = record(metadata.dimensions, `${field}.asset.metadata.dimensions`);
   const originalWidth = numberValue(dimensions.width, `${field}.asset.metadata.dimensions.width`);
   const originalHeight = numberValue(dimensions.height, `${field}.asset.metadata.dimensions.height`);
+  if (originalWidth <= 0 || originalHeight <= 0) {
+    throw new CmsContentError(`${field}.dimensions must be positive`);
+  }
   const crop = image.crop ? record(image.crop, `${field}.crop`) : undefined;
   const cropLeft = crop ? numberValue(crop.left, `${field}.crop.left`) : 0;
   const cropRight = crop ? numberValue(crop.right, `${field}.crop.right`) : 0;
@@ -109,7 +119,7 @@ function adaptImage(
   const widthRatio = 1 - cropLeft - cropRight;
   const heightRatio = 1 - cropTop - cropBottom;
 
-  if (widthRatio <= 0 || heightRatio <= 0) {
+  if ([cropLeft, cropRight, cropTop, cropBottom].some((value) => value < 0 || value > 1) || widthRatio <= 0 || heightRatio <= 0) {
     throw new CmsContentError(`${field}.crop removes the entire image`);
   }
 
@@ -120,6 +130,8 @@ function adaptImage(
   const src = createImageUrlBuilder(config)
     .image(source)
     .auto("format")
+    .width(Math.min(2400, Math.round(originalWidth * widthRatio)))
+    .fit("max")
     .quality(85)
     .url();
   const hotspot = image.hotspot ? record(image.hotspot, `${field}.hotspot`) : undefined;
@@ -250,7 +262,7 @@ export function adaptSanitySummary(
   }
 
   return {
-    slug: requiredString(raw.slug, "article summary.slug"),
+    slug: articleSlug(raw.slug, "article summary.slug"),
     category,
     title: requiredString(raw.title, "article summary.title"),
     dek: requiredString(raw.dek, "article summary.dek"),
@@ -289,7 +301,7 @@ export function adaptSanityArticle(
   const relatedArticles = relatedValues.map((related) =>
     adaptSanitySummary(related, config),
   );
-  const selfSlug = requiredString(raw.slug, "article.slug");
+  const selfSlug = articleSlug(raw.slug, "article.slug");
   if (relatedArticles.some((related) => related.section === section && related.slug === selfSlug)) {
     throw new CmsContentError("article cannot relate to itself");
   }

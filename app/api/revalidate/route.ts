@@ -1,6 +1,6 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
-import { parseBody } from "next-sanity/webhook";
+import { readSignedWebhook, WebhookRequestError } from "@/lib/webhook";
 
 import {
   buildRevalidationPlan,
@@ -11,6 +11,7 @@ import {
 export async function POST(request: NextRequest) {
   const secret = process.env.SANITY_REVALIDATE_SECRET?.trim();
   if (!secret) {
+    console.error("[webhook.config] missing signing secret");
     return Response.json(
       { error: "Revalidation is not configured." },
       { status: 503 },
@@ -20,28 +21,21 @@ export async function POST(request: NextRequest) {
   let body: RevalidationWebhookPayload & { _id: string };
 
   try {
-    const parsed = await parseBody<RevalidationWebhookPayload>(
-      request,
-      secret,
-      false,
-    );
-
-    if (!parsed.isValidSignature) {
-      return Response.json({ error: "Invalid signature." }, { status: 401 });
-    }
-
-    if (!parsed.body || typeof parsed.body._id !== "string") {
-      throw new Error("Webhook payload requires a document ID.");
-    }
-
-    buildRevalidationPlan(parsed.body);
-    body = { ...parsed.body, _id: parsed.body._id };
+    const parsed = await readSignedWebhook(request, secret);
+    buildRevalidationPlan(parsed);
+    body = parsed as RevalidationWebhookPayload & { _id: string };
   } catch (error) {
-    console.error(
-      "Sanity revalidation webhook rejected:",
-      error instanceof Error ? error.message : error,
+    const status = error instanceof WebhookRequestError ? error.status : 400;
+    console.warn("[webhook.reject]", { status });
+    return Response.json(
+      {
+        error:
+          error instanceof WebhookRequestError
+            ? error.message
+            : "Invalid webhook payload.",
+      },
+      { status },
     );
-    return Response.json({ error: "Invalid webhook payload." }, { status: 400 });
   }
 
   try {
@@ -61,11 +55,8 @@ export async function POST(request: NextRequest) {
       documentType: plan.documentType,
       paths: plan.paths,
     });
-  } catch (error) {
-    console.error(
-      "Sanity revalidation failed:",
-      error instanceof Error ? error.message : error,
-    );
+  } catch {
+    console.error("[webhook.revalidate] failed", { documentType: body._type });
     return Response.json(
       { error: "Revalidation dependency lookup failed." },
       { status: 502 },

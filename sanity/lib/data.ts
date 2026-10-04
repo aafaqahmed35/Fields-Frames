@@ -1,3 +1,4 @@
+import { isValidArticleSlug } from "../../content/editorial-routing";
 import type { Article } from "@/content/articles";
 import type { ArticleSummary, EditorialSection } from "@/content/story";
 import { requirePublicSanityConfig } from "@/sanity/env";
@@ -46,7 +47,7 @@ export async function fetchSanityArticleSlugs(
   }
 
   return raw.map((item, index) => {
-    if (!item || typeof item !== "object" || !("slug" in item) || typeof item.slug !== "string") {
+    if (!item || typeof item !== "object" || !("slug" in item) || !isValidArticleSlug(item.slug)) {
       throw new Error(`Malformed Sanity response: article slug ${index} is invalid`);
     }
     return item.slug;

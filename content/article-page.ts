@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
+import { isValidArticleSlug } from "./editorial-routing";
 import type { Article } from "./articles";
 import { getArticle, type ArticleFetchOptions } from "./source";
 import type { EditorialSection } from "./story";
@@ -17,6 +18,7 @@ export async function resolveArticle(
   options?: ArticleFetchOptions,
 ): Promise<Article> {
   const { slug } = await params;
+  if (!isValidArticleSlug(slug)) notFound();
   const article = await getArticle(section, slug, options);
 
   if (!article) {

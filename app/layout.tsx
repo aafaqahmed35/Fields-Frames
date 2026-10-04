@@ -59,7 +59,7 @@ export default async function RootLayout({
         </a>
         <div className="site-frame">
           <PublicationHeader />
-          <main id="main-content">{children}</main>
+          <main id="main-content" tabIndex={-1}>{children}</main>
           <PublicationFooter />
         </div>
         {isPreview ? <VisualEditing /> : null}

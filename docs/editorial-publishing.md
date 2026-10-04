@@ -98,8 +98,8 @@ configuration; P11 does not provide a general redirect CMS.
 
 Presentation calls `/api/draft-mode/enable`. `defineEnableDraftMode` verifies Sanity's
 short-lived preview URL secret with an authenticated server client before setting the
-Next.js Draft Mode cookie. There is no user-supplied redirect and no `/articles/...`
-preview surface. Invalid handshakes are rejected.
+Next.js Draft Mode cookie. Presentation redirects are constrained to canonical publication paths; there is no
+`/articles/...` preview surface. Invalid handshakes are rejected.
 
 Draft reads require `SANITY_API_READ_TOKEN` with the built-in **Viewer** role. They use
 the draft or scheduled-release perspective selected by Presentation (defaulting to
@@ -212,3 +212,6 @@ git diff --check
 `npm run publishing:validate` exercises canonical route resolution, slug rejection,
 create/update/unpublish payloads, actual author/related dependency identities,
 malformed payload handling, fallback invalidation, and old/new targeted plans.
+
+For the authoritative deployment environment contract, hardening controls and
+recovery steps, see [production-runbook.md](production-runbook.md).
