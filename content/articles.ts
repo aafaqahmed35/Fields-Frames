@@ -30,6 +30,7 @@ export type ArticleReference = {
 
 export type Article = StorySummary & {
   section: EditorialSection;
+  modifiedAt?: string;
   mode: ArticleMode;
   readingMinutes: number;
   authorDetails: Author;

@@ -1,3 +1,5 @@
+import { resolvePublicOrigin } from "@/lib/site-origin";
+import { previewRobots, publicationDescription, publicationName } from "@/lib/seo";
 import type { Metadata } from "next";
 import { Newsreader, Source_Sans_3 } from "next/font/google";
 import { draftMode } from "next/headers";
@@ -28,16 +30,25 @@ const sourceSans = Source_Sans_3({
   display: "swap",
 });
 
-export const metadata: Metadata = {
+const rootMetadata: Metadata = {
+  metadataBase: new URL(resolvePublicOrigin()),
   title: {
-    default: "Mind & Margin",
+    default: publicationName,
     template: "%s | Mind & Margin",
   },
-  description:
-    "An independent publication about football, cinema, life, culture, and ideas.",
+  description: publicationDescription,
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    ...rootMetadata,
+    robots: (await draftMode()).isEnabled ? previewRobots : undefined,
+  };
+}
+
+export default async function RootLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   const isPreview = (await draftMode()).isEnabled;
 
   return (

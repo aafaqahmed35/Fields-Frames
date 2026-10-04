@@ -43,6 +43,7 @@ export function defineStories<
 
 export type ArticleSummary = StorySummary & {
   section: EditorialSection;
+  modifiedAt?: string;
 };
 
 export const sectionRoutes: Record<EditorialSection, string> = {

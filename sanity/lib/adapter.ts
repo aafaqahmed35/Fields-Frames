@@ -257,6 +257,7 @@ export function adaptSanitySummary(
     author: requiredString(raw.author, "article summary.author"),
     date,
     dateLabel: formatPublicationDate(date),
+    modifiedAt: optionalString(raw._updatedAt, "article._updatedAt"),
     image: adaptImage(raw.leadImage, "article summary.leadImage", config),
     section,
   };
@@ -313,6 +314,7 @@ export function adaptSanityArticle(
     authorDetails,
     date,
     dateLabel: formatPublicationDate(date),
+    modifiedAt: optionalString(raw._updatedAt, "article._updatedAt"),
     image: adaptImage(raw.leadImage, "article.leadImage", config),
     section,
     mode: modeValue(raw.mode),

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "content:validate": "node --import tsx scripts/validate-content.ts",
+    "seo:validate": "node --import tsx scripts/validate-seo.ts",
     "publishing:validate": "node --import tsx scripts/validate-publishing.ts",
     "sanity:schema": "sanity schema extract --enforce-required-fields --force",
     "sanity:typegen": "sanity typegen generate",

@@ -151,7 +151,7 @@ export function buildRevalidationPlan(payload: unknown): RevalidationPlan {
     Boolean(identity),
   );
 
-  const paths = new Set<string>(["/"]);
+  const paths = new Set<string>(["/", "/sitemap.xml"]);
   const tags = new Set<string>();
 
   if (identities.length === 0) {

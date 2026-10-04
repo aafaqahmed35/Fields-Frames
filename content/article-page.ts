@@ -1,3 +1,4 @@
+import { articleMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
@@ -32,33 +33,5 @@ export async function buildArticleMetadata(
 ): Promise<Metadata> {
   const article = await resolveArticle(section, params, { stega: false });
   const isPreview = (await draftMode()).isEnabled;
-  const socialImage =
-    article.seo?.socialImage ??
-    (article.image?.src.startsWith("https://") ? article.image : undefined);
-
-  return {
-    title: article.seo?.title ?? article.title,
-    description: article.seo?.description ?? article.dek,
-    robots: isPreview
-      ? { index: false, follow: false, nocache: true }
-      : undefined,
-    openGraph: {
-      type: "article",
-      title: article.seo?.title ?? article.title,
-      description: article.seo?.description ?? article.dek,
-      publishedTime: article.date,
-      authors: [article.author],
-      section: article.section,
-      images: socialImage
-        ? [
-            {
-              url: socialImage.src,
-              width: socialImage.width,
-              height: socialImage.height,
-              alt: socialImage.alt,
-            },
-          ]
-        : undefined,
-    },
-  };
+  return articleMetadata(article, isPreview);
 }

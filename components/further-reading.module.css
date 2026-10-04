@@ -1,0 +1,17 @@
+.reading {
+  padding-block: var(--space-8, 4rem);
+}
+.reading h2 {
+  margin-bottom: 2rem;
+}
+.reading article {
+  border-top: 1px solid currentColor;
+  padding-block: 1.5rem;
+  max-width: 48rem;
+}
+.reading h3 {
+  margin-block: 0.5rem;
+}
+.reading article > p {
+  margin-block: 0.75rem;
+}

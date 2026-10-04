@@ -8,6 +8,7 @@ export const ARTICLE_QUERY = defineQuery(`
     defined(publishedAt)
   ][0]{
     _id,
+    _updatedAt,
     title,
     "slug": slug.current,
     section,
@@ -43,6 +44,7 @@ export const ARTICLE_QUERY = defineQuery(`
     author->{_id, name, "slug": slug.current, bio},
     relatedArticles[]->{
       _id,
+      _updatedAt,
       title,
       "slug": slug.current,
       section,
@@ -99,6 +101,7 @@ export const ARTICLE_SUMMARIES_QUERY = defineQuery(`
     defined(publishedAt)
   ] | order(publishedAt desc) {
     _id,
+    _updatedAt,
     title,
     "slug": slug.current,
     section,

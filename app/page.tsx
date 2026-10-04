@@ -1,3 +1,8 @@
+import {
+  pageMetadata,
+  publicationDescription,
+  publicationName,
+} from "@/lib/seo";
 import Link from "next/link";
 
 import { StoryLink } from "@/components/story-link";
@@ -10,6 +15,12 @@ import {
 } from "./_homepage/story-elements";
 import { getHomepageStories } from "./_homepage/stories";
 import styles from "./home.module.css";
+
+export const metadata = pageMetadata(
+  publicationName,
+  publicationDescription,
+  "/",
+);
 
 const gateways = [
   { section: "FIELD" as const, href: "/football", index: "01" },

@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import { FurtherReading } from "@/components/further-reading";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 
 import { StoryLink } from "@/components/story-link";
@@ -7,11 +8,11 @@ import { resolveCuratedStories } from "@/content/source";
 import { fieldStories, type FieldStory } from "./field-stories";
 import styles from "./football.module.css";
 
-export const metadata: Metadata = {
-  title: "FIELD — Football",
-  description:
-    "FIELD is Mind & Margin's football world: matches, tactics, places, memory, and the life around the game.",
-};
+export const metadata = pageMetadata(
+  "FIELD — Football",
+  "FIELD is Mind & Margin's football world: matches, tactics, places, memory, and the life around the game.",
+  "/football",
+);
 
 function StoryMeta({ story, inverse = false }: { story: FieldStory; inverse?: boolean }) {
   return (
@@ -226,6 +227,7 @@ export default async function FootballPage() {
           <p>12 stories in this edition</p>
         </div>
       </footer>
+      <FurtherReading section="FIELD" curated={fieldStories} />
     </div>
   );
 }

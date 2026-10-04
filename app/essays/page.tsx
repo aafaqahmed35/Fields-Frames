@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import { FurtherReading } from "@/components/further-reading";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 
 import { StoryLink } from "@/components/story-link";
@@ -7,11 +8,11 @@ import { resolveCuratedStories } from "@/content/source";
 import { essayStories, type EssayStory } from "./essay-stories";
 import styles from "./essays.module.css";
 
-export const metadata: Metadata = {
-  title: "ESSAYS — Life, Culture, and Ideas",
-  description:
-    "ESSAYS is Mind & Margin's world for attentive writing about ordinary life, memory, culture, technology, places, and ideas.",
-};
+export const metadata = pageMetadata(
+  "ESSAYS — Life, Culture, and Ideas",
+  "ESSAYS is Mind & Margin's world for attentive writing about ordinary life, memory, culture, technology, places, and ideas.",
+  "/essays",
+);
 
 function StoryMeta({ story }: { story: EssayStory }) {
   return (
@@ -288,6 +289,7 @@ export default async function EssaysPage() {
           <p>The page ends. The thought need not.</p>
         </div>
       </footer>
+      <FurtherReading section="ESSAYS" curated={essayStories} />
     </div>
   );
 }

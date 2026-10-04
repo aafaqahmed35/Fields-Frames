@@ -31,7 +31,7 @@ const created = buildRevalidationPlan({
   before: null,
   after: { section: "FIELD", slug: "new-story" },
 });
-assert.deepEqual(created.paths, ["/", "/football", "/football/new-story"]);
+assert.deepEqual(created.paths, ["/", "/sitemap.xml", "/football", "/football/new-story"]);
 assert.deepEqual(created.tags, [
   sectionCacheTag("FIELD"),
   articleIdentityCacheTag("FIELD", "new-story"),
@@ -45,6 +45,7 @@ const moved = buildRevalidationPlan({
 });
 assert.deepEqual(moved.paths, [
   "/",
+  "/sitemap.xml",
   "/football",
   "/football/old-slug",
   "/essays",
@@ -70,6 +71,7 @@ const malformedPublishedArticle = buildRevalidationPlan({
 });
 assert.deepEqual(malformedPublishedArticle.paths, [
   "/",
+  "/sitemap.xml",
   "/football",
   "/cinema",
   "/essays",

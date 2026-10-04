@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import { FurtherReading } from "@/components/further-reading";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 
 import { StoryLink } from "@/components/story-link";
@@ -7,11 +8,11 @@ import { resolveCuratedStories } from "@/content/source";
 import { cinemaStories, type CinemaStory } from "./cinema-stories";
 import styles from "./cinema.module.css";
 
-export const metadata: Metadata = {
-  title: "CINEMA — Film and Filmmaking",
-  description:
-    "CINEMA is Mind & Margin's world for film criticism, filmmaking, performance, moviegoing, and the images that stay with us.",
-};
+export const metadata = pageMetadata(
+  "CINEMA — Film and Filmmaking",
+  "CINEMA is Mind & Margin's world for film criticism, filmmaking, performance, moviegoing, and the images that stay with us.",
+  "/cinema",
+);
 
 function StoryMeta({ story, inverse = false }: { story: CinemaStory; inverse?: boolean }) {
   return (
@@ -248,6 +249,7 @@ export default async function CinemaPage() {
           <p>The screen goes dark. The seeing continues.</p>
         </div>
       </section>
+      <FurtherReading section="CINEMA" curated={cinemaStories} />
     </div>
   );
 }

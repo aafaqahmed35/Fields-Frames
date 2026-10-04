@@ -1,3 +1,4 @@
+import { articleStructuredData } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -62,18 +63,7 @@ function BodyBlock({ block }: { block: EditorialBodyBlock }) {
 }
 
 function ArticleStructuredData({ article }: { article: Article }) {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.title,
-    description: article.dek,
-    datePublished: article.date,
-    articleSection: article.section,
-    author: {
-      "@type": "Person",
-      name: article.authorDetails.name,
-    },
-  };
+  const data = articleStructuredData(article);
 
   return (
     <script
